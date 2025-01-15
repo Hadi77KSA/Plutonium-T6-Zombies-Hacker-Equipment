@@ -1,0 +1,39 @@
+FUNCTIONALITY
+	wallbuys
+		hackable, no effect
+			-> 20250108 hackable, costs flip, no model flip.
+			-> 20250109 done.
+			-> some spots specific to other modes (Grief, Survival) had hack prompt appear. Fixed that.
+			-> 20250113 made wallbuy model not flip on Origins due to the map defining level._wallbuy_override_num_bits. Might change.
+		TranZit bus B23r
+
+	Buried chalk wallbuys (some hackable, have not checked effect)
+	doors (partial)
+		-> debris are considered done after added functionality.
+		-> 20250113 some doors have the hack prompt, but do not show it unless if the player is closer (such as with noclip).
+	box (not all hackable, functionality tends to bug)
+		-> 20250111 most are hackable, no longer buggy. Need to fix Die Rise upside-down box hack triggers.
+		-> 20250113 Die Rise considered done. Need to investigate Buried.
+
+	barricade repair (boards get repaired while hacker is out)
+		-> 20250109 done.
+
+	perk refunds (partial, need to account for moving perks)
+		-> 20250109 done.
+
+	add pick up spots.
+	investigate Max Ammo to Fire Sale behaviour on TranZit and Die Rise
+		-> 20250111 runtime error and no effect once picked up. Used replaceFunc to add Max Ammo to non-hackable powerups if Fire Sale is not added.
+
+DESIGN
+	sounds
+	model
+	animations
+	hud icon
+	shooting it results in com_error, caused by weaponType
+		-> 20250109 set weaponType to "mine" with unlimitedammo enabled, considered done. Might need to change.
+
+	shooting it makes the equipment go away upon switching from it
+		-> 20250109 considered done with the com_error solution. Might need to change.
+
+	fix positioning in player hands in world view [low priority]

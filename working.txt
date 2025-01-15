@@ -1,0 +1,6 @@
+FUNCTIONALITY
+	player to player point sharing
+	carry round bonus
+	powerup change
+
+DESIGN
