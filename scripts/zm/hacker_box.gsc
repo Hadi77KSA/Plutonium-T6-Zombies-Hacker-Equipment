@@ -11,8 +11,12 @@ main()
 
 box_respin_think( chest, player )
 {
+	if ( getdvar( "mapname" ) == "zm_highrise" )
+		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
+	else
+		org = self.origin;
+
 	respin_hack = spawnstruct();
-	org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
 	respin_hack.origin = org + vectorscale( ( 0, 0, 1 ), 24.0 );
 	respin_hack.radius = 48;
 	respin_hack.height = 72;
@@ -21,6 +25,10 @@ box_respin_think( chest, player )
 	respin_hack.player = player;
 	respin_hack.no_bullet_trace = 1;
 	respin_hack.chest = chest;
+
+	if ( getdvar( "mapname" ) == "zm_buried" )
+		respin_hack.no_sight_check = 1;
+
 	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( respin_hack, ::respin_box, ::hack_box_qualifier );
 	self.weapon_model waittill_either( "death", "kill_respin_think_thread" );
 	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( respin_hack );
@@ -28,8 +36,12 @@ box_respin_think( chest, player )
 
 box_respin_respin_think( chest, player )
 {
+	if ( getdvar( "mapname" ) == "zm_highrise" )
+		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
+	else
+		org = self.origin;
+
 	respin_hack = spawnstruct();
-	org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
 	respin_hack.origin = org + vectorscale( ( 0, 0, 1 ), 24.0 );
 	respin_hack.radius = 48;
 	respin_hack.height = 72;
@@ -38,6 +50,10 @@ box_respin_respin_think( chest, player )
 	respin_hack.player = player;
 	respin_hack.no_bullet_trace = 1;
 	respin_hack.chest = chest;
+
+	if ( getdvar( "mapname" ) == "zm_buried" )
+		respin_hack.no_sight_check = 1;
+
 	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( respin_hack, ::respin_respin_box, ::hack_box_qualifier );
 	self.weapon_model waittill_either( "death", "kill_respin_respin_think_thread" );
 	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( respin_hack );
@@ -80,8 +96,12 @@ init_summon_box( create )
 			self._summon_hack_struct = undefined;
 		}
 
+		if ( getdvar( "mapname" ) == "zm_highrise" )
+			org = groundpos( self.chest_box.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
+		else
+			org = self.chest_box.origin;
+
 		struct = spawnstruct();
-		org = groundpos( self.chest_box.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
 		struct.origin = org + vectorscale( ( 0, 0, 1 ), 24.0 );
 		struct.radius = 48;
 		struct.height = 72;
@@ -90,6 +110,10 @@ init_summon_box( create )
 		struct.no_bullet_trace = 1;
 		struct.chest = self;
 		self._summon_hack_struct = struct;
+
+		if ( getdvar( "mapname" ) == "zm_buried" )
+			struct.no_sight_check = 1;
+
 		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::summon_box, ::summon_box_qualifier );
 	}
 	else if ( isdefined( self._summon_hack_struct ) )
