@@ -11,9 +11,12 @@ FUNCTIONALITY
 	doors (partial)
 		-> debris are considered done after added functionality.
 		-> 20250113 some doors have the hack prompt, but do not show it unless if the player is closer (such as with noclip).
+		-> 20250116 added struct.no_sight_check defining on Buried to fix prompt not appearing, and increased trigger radius on Origins for triggers that require being closer.
+
 	box (not all hackable, functionality tends to bug)
 		-> 20250111 most are hackable, no longer buggy. Need to fix Die Rise upside-down box hack triggers.
 		-> 20250113 Die Rise considered done. Need to investigate Buried.
+		-> 20250116 added struct.no_sight_check defining on Buried to fix prompt not appearing, and changed setting of trigger origin to use original method except on Die Rise to avoid bugs on other maps.
 
 	barricade repair (boards get repaired while hacker is out)
 		-> 20250109 done.
@@ -21,7 +24,7 @@ FUNCTIONALITY
 	perk refunds (partial, need to account for moving perks)
 		-> 20250109 done.
 
-	add pick up spots.
+	add pick up spots
 	investigate Max Ammo to Fire Sale behaviour on TranZit and Die Rise
 		-> 20250111 runtime error and no effect once picked up. Used replaceFunc to add Max Ammo to non-hackable powerups if Fire Sale is not added.
 
