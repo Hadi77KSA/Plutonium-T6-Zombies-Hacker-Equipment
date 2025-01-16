@@ -1,6 +1,44 @@
 #include maps\mp\zombies\_zm_hackables_doors;
 #include maps\mp\zombies\_zm_utility;
 
+main()
+{
+	replaceFunc( maps\mp\zombies\_zm_hackables_doors::hack_doors, ::hack_doors );
+}
+
+hack_doors( targetname, door_activate_func )
+{
+	if ( !isdefined( targetname ) )
+		targetname = "zombie_door";
+
+	doors = getentarray( targetname, "targetname" );
+
+	if ( !isdefined( door_activate_func ) )
+		door_activate_func = maps\mp\zombies\_zm_blockers::door_opened;
+
+	for ( i = 0; i < doors.size; i++ )
+	{
+		door = doors[i];
+		struct = spawnstruct();
+		struct.origin = door.origin + anglestoforward( door.angles ) * 2;
+		struct.radius = 48;
+		struct.height = 72;
+		struct.script_float = 32.7;
+		struct.script_int = 200;
+		struct.door = door;
+		struct.no_bullet_trace = 1;
+		struct.door_activate_func = door_activate_func;
+		trace_passed = 0;
+
+		if ( getdvar( "mapname" ) == "zm_buried" )
+			struct.no_sight_check = 1;
+
+		door thread hide_door_buy_when_hacker_active( struct );
+		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::door_hack );
+		door thread watch_door_for_open( struct );
+	}
+}
+
 hack_debris()
 {
 	doors = getentarray( "zombie_debris", "targetname" );
@@ -15,6 +53,10 @@ hack_debris()
 		struct.script_int = 200;
 		struct.door = door;
 		struct.no_bullet_trace = 1;
+
+		if ( getdvar( "mapname" ) == "zm_buried" )
+			struct.no_sight_check = 1;
+
 		door thread hide_door_buy_when_hacker_active( struct );
 		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::debris_hack );
 		door thread watch_debris_for_open( struct );
