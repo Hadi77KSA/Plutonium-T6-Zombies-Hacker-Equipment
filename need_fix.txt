@@ -23,6 +23,7 @@ FUNCTIONALITY
 
 	perk refunds (partial, need to account for moving perks)
 		-> 20250109 done.
+		-> 20250116 made struct.entity only get set on Nuketown Zombies and Die Rise, and increased trigger radius on Nuketown Zombies.
 
 	add pick up spots
 	investigate Max Ammo to Fire Sale behaviour on TranZit and Die Rise

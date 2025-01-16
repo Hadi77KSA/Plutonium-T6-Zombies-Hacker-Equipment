@@ -1,8 +1,29 @@
 #include maps\mp\zombies\_zm_hackables_perks;
 
+init()
+{
+	switch ( getdvar( "mapname" ) )
+	{
+		case "zm_nuked":
+		case "zm_highrise":
+			level._hack_perks_override = ::hack_perks_override;
+	}
+}
+
+hack_perks_override()
+{
+	self.entity = self.perk;
+	return self;
+}
+
 hack_perks()
 {
 	vending_triggers = getentarray( "zombie_vending", "targetname" );
+
+	if ( getdvar( "mapname" ) == "zm_nuked" )
+		radius = 64;
+	else
+		radius = 48;
 
 	for ( i = 0; i < vending_triggers.size; i++ )
 	{
@@ -17,7 +38,7 @@ hack_perks()
 			machine = getentarray( vending_triggers[i].target, "targetname" );
 
 		struct.origin = machine[0].origin + anglestoright( machine[0].angles ) * 18 + vectorscale( ( 0, 0, 1 ), 48.0 );
-		struct.radius = 48;
+		struct.radius = radius;
 		struct.height = 64;
 		struct.script_float = 5;
 
@@ -32,7 +53,6 @@ hack_perks()
 
 		vending_triggers[i].hackable = struct;
 		struct.no_bullet_trace = 1;
-		struct.entity = struct.perk;
 		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::perk_hack, ::perk_hack_qualifier );
 	}
 
