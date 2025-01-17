@@ -9,6 +9,7 @@ FUNCTIONALITY
 
 	Buried chalk wallbuys (some hackable, have not checked effect)
 		-> 20250116 the hackable chalk spot was Grief mode's Olympia, which disappeared with the modification made to fix the problem of wall weapons appearing on a mode they are not intended for.
+		-> 20250117 done.
 
 	doors (partial)
 		-> debris are considered done after added functionality.

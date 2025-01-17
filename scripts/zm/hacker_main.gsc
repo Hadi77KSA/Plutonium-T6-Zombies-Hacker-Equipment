@@ -65,6 +65,10 @@ init_hackables()
 		replaceFunc( maps\mp\zombies\_zm_hackables_powerups::unhackable_powerup, ::unhackable_powerup );
 
 	thread maps\mp\zombies\_zm_hackables_box::box_hacks();
+	wait 1;
+
+	if ( getdvar( "mapname" ) == "zm_buried" )
+		thread scripts\zm\hacker_dynamic_wallbuys::hack_dynamic_wallbuys();
 }
 
 unhackable_powerup( name )
