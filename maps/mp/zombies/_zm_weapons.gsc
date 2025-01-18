@@ -2111,7 +2111,7 @@ weapon_spawn_think()
             if ( isdefined( level.pers_upgrade_nube ) && level.pers_upgrade_nube )
                 str_weapon = maps\mp\zombies\_zm_pers_upgrades_functions::pers_nube_weapon_ammo_check( player, str_weapon );
 
-            if ( isdefined( self.stub.hacked ) && self.stub.hacked )
+            if ( isdefined( self.hacked ) && self.hacked || isdefined( self.stub.hacked ) && self.stub.hacked )
             {
                 if ( !player has_upgrade( str_weapon ) )
                     ammo_cost = 4500;

@@ -52,6 +52,10 @@ hacker_position_cleanup()
 init_hackables()
 {
 	thread maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys();
+
+	if ( getdvar( "mapname" ) == "zm_transit" && is_classic() )
+		thread scripts\zm\hacker_wallbuys::hack_bus_weapon();
+
 	thread scripts\zm\hacker_perks::hack_perks();
 	// thread maps\mp\zombies\_zm_hackables_packapunch::hack_packapunch();
 	thread maps\mp\zombies\_zm_hackables_boards::hack_boards();
@@ -68,7 +72,7 @@ init_hackables()
 	wait 1;
 
 	if ( getdvar( "mapname" ) == "zm_buried" )
-		thread scripts\zm\hacker_dynamic_wallbuys::hack_dynamic_wallbuys();
+		thread scripts\zm\hacker_wallbuys::hack_dynamic_wallbuys();
 }
 
 unhackable_powerup( name )

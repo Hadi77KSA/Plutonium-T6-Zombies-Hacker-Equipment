@@ -6,6 +6,7 @@ FUNCTIONALITY
 			-> some spots specific to other modes (Grief, Survival) had hack prompt appear. Fixed that.
 			-> 20250113 made wallbuy model not flip on Origins due to the map defining level._wallbuy_override_num_bits. Might change.
 		TranZit bus B23r
+			-> 20250118 made hackable, model flips when the bus is stopped.
 
 	Buried chalk wallbuys (some hackable, have not checked effect)
 		-> 20250116 the hackable chalk spot was Grief mode's Olympia, which disappeared with the modification made to fix the problem of wall weapons appearing on a mode they are not intended for.
