@@ -27,8 +27,14 @@ bus_wallbuy_hack( hacker )
     self.wallbuy.hacked = true;
     maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
 
-	while ( level.the_bus.ismoving )
-		wait 0.05;
+	if ( level.the_bus.ismoving )
+	{
+		do
+			wait 0.05;
+		while ( level.the_bus.ismoving )
+	}
+	else
+		level.the_bus waittill( "ready_to_depart" );
 
 	model = getent( self.wallbuy.target, "targetname" );
 	model unlink();
