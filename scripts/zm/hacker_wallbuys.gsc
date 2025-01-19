@@ -24,8 +24,8 @@ hack_bus_weapon()
 
 bus_wallbuy_hack( hacker )
 {
-    self.wallbuy.hacked = true;
-    maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
+	self.wallbuy.hacked = true;
+	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
 
 	if ( level.the_bus.ismoving )
 	{
