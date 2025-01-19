@@ -30,7 +30,7 @@ bus_wallbuy_hack( hacker )
 	if ( level.the_bus.ismoving )
 	{
 		do
-			wait 0.05;
+			wait 2;
 		while ( level.the_bus.ismoving )
 	}
 	else
