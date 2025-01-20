@@ -16,8 +16,6 @@ hack_wallbuys()
     if ( "" != location )
         match_string = match_string + "_" + location;
 
-    match_string_plus_space = " " + match_string;
-
     for ( i = 0; i < weapon_spawns.size; i++ )
     {
         if ( weapontype( weapon_spawns[i].zombie_weapon_upgrade ) == "grenade" )
@@ -32,23 +30,8 @@ hack_wallbuys()
         if ( weapontype( weapon_spawns[i].zombie_weapon_upgrade ) == "bomb" )
             continue;
 
-        if ( isdefined( weapon_spawns[i].script_noteworthy ) && weapon_spawns[i].script_noteworthy != "" )
-        {
-            skip = true;
-            matches = strtok( weapon_spawns[i].script_noteworthy, "," );
-
-            for ( j = 0; j < matches.size; j++ )
-            {
-                if ( matches[j] == match_string || matches[j] == match_string_plus_space )
-                {
-                    skip = false;
-                    break;
-                }
-            }
-
-            if ( skip )
+        if ( isdefined( weapon_spawns[i].script_noteworthy ) && !issubstr( weapon_spawns[i].script_noteworthy, match_string ) )
                 continue;
-        }
 
         struct = spawnstruct();
         struct.origin = weapon_spawns[i].origin;
