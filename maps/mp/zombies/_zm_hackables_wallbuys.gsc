@@ -31,7 +31,7 @@ hack_wallbuys()
             continue;
 
         if ( isdefined( weapon_spawns[i].script_noteworthy ) && !issubstr( weapon_spawns[i].script_noteworthy, match_string ) )
-                continue;
+            continue;
 
         struct = spawnstruct();
         struct.origin = weapon_spawns[i].origin;
