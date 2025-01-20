@@ -1,13 +1,17 @@
 #include common_scripts\utility;
 #include maps\mp\zombies\_zm_utility;
 
-init()
+main()
 {
 	hacker_location_random_init();
 	limit_equipment( "equip_hacker_zm", 1 );
 	include_equipment( "equip_hacker_zm" );
 	maps\mp\zombies\_zm_equip_hacker::init();
 	register_equipment_for_level( "equip_hacker_zm" );
+}
+
+init()
+{
 	thread init_hackables();
 }
 
