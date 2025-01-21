@@ -1,8 +1,10 @@
 #include common_scripts\utility;
+#include maps\mp\zombies\_zm_equip_hacker;
 #include maps\mp\zombies\_zm_utility;
 
 main()
 {
+	replaceFunc( maps\mp\zombies\_zm_equip_hacker::hacker_do_hack, ::hacker_do_hack );
 	hacker_location_random_init();
 	limit_equipment( "equip_hacker_zm", 1 );
 	include_equipment( "equip_hacker_zm" );
@@ -13,6 +15,90 @@ main()
 init()
 {
 	thread init_hackables();
+}
+
+hacker_do_hack( hackable )
+{
+	timer = 0;
+	hacked = 0;
+	hackable._trigger.beinghacked = 1;
+
+	if ( !isdefined( self.hackerprogressbar ) )
+		self.hackerprogressbar = self maps\mp\gametypes_zm\_hud_util::createprimaryprogressbar();
+
+	if ( !isdefined( self.hackertexthud ) )
+		self.hackertexthud = newclienthudelem( self );
+
+	hack_duration = hackable.script_float;
+
+	if ( self hasperk( "specialty_fastreload" ) )
+		hack_duration = hack_duration * 0.66;
+
+	hack_duration = max( 1.5, hack_duration );
+	self thread tidy_on_deregister( hackable );
+	self.hackerprogressbar maps\mp\gametypes_zm\_hud_util::updatebar( 0.01, 1 / hack_duration );
+	self.hackertexthud.alignx = "center";
+	self.hackertexthud.aligny = "middle";
+	self.hackertexthud.horzalign = "center";
+	self.hackertexthud.vertalign = "bottom";
+	self.hackertexthud.y = -113;
+
+	if ( issplitscreen() )
+		self.hackertexthud.y = -107;
+
+	self.hackertexthud.foreground = 1;
+	self.hackertexthud.font = "default";
+	self.hackertexthud.fontscale = 1.8;
+	self.hackertexthud.alpha = 1;
+	self.hackertexthud.color = ( 1, 1, 1 );
+	self.hackertexthud settext( &"ZOMBIE_HACKING" );
+	sound_ent = spawn( "script_origin", self.origin );
+	sound_ent playloopsound( "zmb_progress_bar", 0.5 );
+	sound_ent linkto( self );
+
+	while ( self is_hacking( hackable ) )
+	{
+		wait 0.05;
+		timer = timer + 0.05;
+
+		if ( self maps\mp\zombies\_zm_laststand::player_is_in_laststand() )
+			break;
+
+		if ( timer >= hack_duration )
+		{
+			hacked = 1;
+			break;
+		}
+	}
+
+	sound_ent stoploopsound( 0.5 );
+	sound_ent thread wait_then_remove( 0.5 );
+
+	if ( hacked )
+		self playsound( "vox_mcomp_hack_success" );
+	else
+		self playsound( "vox_mcomp_hack_fail" );
+
+	if ( isdefined( self.hackerprogressbar ) )
+		self.hackerprogressbar maps\mp\gametypes_zm\_hud_util::destroyelem();
+
+	if ( isdefined( self.hackertexthud ) )
+		self.hackertexthud destroy();
+
+	hackable set_hack_hint_string();
+
+	if ( isdefined( hackable._trigger ) )
+		hackable._trigger.beinghacked = 0;
+
+	self notify( "clean_up_tidy_up" );
+	return hacked;
+}
+
+wait_then_remove( length )
+{
+	wait( length );
+	self unlink();
+	self delete();
 }
 
 hacker_location_random_init()

@@ -36,6 +36,8 @@ FUNCTIONALITY
 
 DESIGN
 	sounds
+		-> 20250121 added success, fail, and in-progress hack sounds. Audio files and soundbank aliases obtained through BO3 using Scobalula's Greyhound and HydraX.
+
 	model
 	animations
 	hud icon
