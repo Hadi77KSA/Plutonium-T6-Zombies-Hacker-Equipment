@@ -6,6 +6,10 @@
 
 main()
 {
+/*
+	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys, ::hack_wallbuys );
+	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack, ::wallbuy_hack );
+*/
 	replaceFunc( maps\mp\zombies\_zm_weapons::weapon_spawn_think, ::weapon_spawn_think );
 }
 

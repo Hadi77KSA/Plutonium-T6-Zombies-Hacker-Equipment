@@ -1,5 +1,10 @@
 #include maps\mp\zombies\_zm_hackables_perks;
-
+/*
+main()
+{
+	replaceFunc( maps\mp\zombies\_zm_hackables_perks::hack_perks, ::hack_perks );
+}
+*/
 init()
 {
 	switch ( getdvar( "mapname" ) )

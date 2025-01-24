@@ -6,6 +6,7 @@ main()
 {
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_think, ::box_respin_think );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_respin_think, ::box_respin_respin_think );
+	// replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_respin_box, ::respin_respin_box );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::init_summon_box, ::init_summon_box );
 }
 

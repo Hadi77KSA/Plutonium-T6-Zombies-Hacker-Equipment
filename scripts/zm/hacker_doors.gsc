@@ -1,11 +1,11 @@
 #include maps\mp\zombies\_zm_hackables_doors;
 #include maps\mp\zombies\_zm_utility;
-
+/*
 main()
 {
 	replaceFunc( maps\mp\zombies\_zm_hackables_doors::hack_doors, ::hack_doors );
 }
-
+*/
 hack_doors( targetname, door_activate_func )
 {
 	if ( !isdefined( targetname ) )
