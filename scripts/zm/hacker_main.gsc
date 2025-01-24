@@ -141,7 +141,7 @@ hacker_position_cleanup()
 
 init_hackables()
 {
-	thread maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys();
+	thread scripts\zm\hacker_wallbuys::hack_wallbuys();
 
 	if ( getdvar( "mapname" ) == "zm_transit" && is_classic() )
 		thread scripts\zm\hacker_wallbuys::hack_bus_weapon();
