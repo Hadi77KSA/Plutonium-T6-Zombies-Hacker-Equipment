@@ -17,6 +17,7 @@ FUNCTIONALITY
 		-> 20250113 some doors have the hack prompt, but do not show it unless if the player is closer (such as with noclip).
 		-> 20250116 added struct.no_sight_check defining on Buried to fix prompt not appearing, and increased trigger radius on Origins for triggers that require being closer.
 		-> 20250117 added checks for doors that should not be hackable on non-classic modes.
+		-> 20250207 added struct.no_sight_check defining on Nuketown Zombies to fix prompt not appearing on some doors.
 
 	box (not all hackable, functionality tends to bug)
 		-> 20250111 most are hackable, no longer buggy. Need to fix Die Rise upside-down box hack triggers.

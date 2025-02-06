@@ -22,6 +22,7 @@ hack_doors( targetname, door_activate_func )
 
 	switch ( getdvar( "mapname" ) )
 	{
+		case "zm_nuked":
 		case "zm_buried":
 			no_sight_check = 1;
 			break;
@@ -105,14 +106,10 @@ watch_debris_for_open( door_struct )
 
 debris_waittill_purchased()
 {
-	for (;;)
-	{
+	do
 		self waittill( "trigger", who, force );
-
-		if ( is_player_valid( who )
-			&& ( getdvarint( #"zombie_unlock_all" ) > 0
-			|| ( isdefined( force ) && force || who usebuttonpressed() && !who in_revive_trigger() ) && who.score >= self.zombie_cost )
-		)
-			break;
-	}
+	while ( !is_player_valid( who )
+		|| getdvarint( #"zombie_unlock_all" ) <= 0
+		&& !( isdefined( force ) && force ) && ( !who usebuttonpressed() || who in_revive_trigger() || who.score < self.zombie_cost )
+	);
 }
