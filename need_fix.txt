@@ -40,8 +40,12 @@ DESIGN
 		-> 20250121 added success, fail, and in-progress hack sounds. Audio files and soundbank aliases obtained through BO3 using Scobalula's Greyhound and HydraX.
 
 	model
+		-> 20250207 added from the model exports from BO1's zombie_moon.ff through OAT. Used a modified version of "p_zom_moon_hacker_box_open" for the weapon in player viewmodel since OAT only properly imports rigid models. Materials are all done through copy-pasting similar templates based on the techniquesets.
+
 	animations
 	hud icon
+		-> 20250207 added, but is transparent when it has no ammo. Material is done through copy-pasting a similar template based on BO2's equipment icons.
+
 	shooting it results in com_error, caused by weaponType
 		-> 20250109 set weaponType to "mine" with unlimitedammo enabled, considered done. Might need to change.
 
@@ -49,3 +53,4 @@ DESIGN
 		-> 20250109 considered done with the com_error solution. Might need to change.
 
 	fix positioning in player hands in world view [low priority]
+		-> 20250207 considered done with the addition of BO1 Moon's Hacker model.

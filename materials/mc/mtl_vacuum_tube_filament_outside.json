@@ -1,0 +1,109 @@
+{
+    "_type": "material",
+    "_version": 1,
+    "cameraRegion": "emissiveTrans",
+    "constants": [],
+    "contents": 1,
+    "gameFlags": [
+        "1000"
+    ],
+    "hashIndex": 0,
+    "layeredSurfaceTypes": 536870912,
+    "probeMipBits": 0,
+    "sortKey": 31,
+    "stateBits": [
+        {
+            "alphaTest": "disabled",
+            "blendOpAlpha": "add",
+            "blendOpRgb": "add",
+            "colorWriteAlpha": true,
+            "colorWriteRgb": true,
+            "cullFace": "back",
+            "depthTest": "less_equal",
+            "depthWrite": false,
+            "dstBlendAlpha": "one",
+            "dstBlendRgb": "one",
+            "polygonOffset": "offset1",
+            "polymodeLine": false,
+            "srcBlendAlpha": "zero",
+            "srcBlendRgb": "one"
+        },
+        {
+            "alphaTest": "disabled",
+            "blendOpAlpha": "disabled",
+            "blendOpRgb": "disabled",
+            "colorWriteAlpha": false,
+            "colorWriteRgb": true,
+            "cullFace": "back",
+            "depthTest": "less_equal",
+            "depthWrite": false,
+            "dstBlendAlpha": "zero",
+            "dstBlendRgb": "zero",
+            "polygonOffset": "offset2",
+            "polymodeLine": true,
+            "srcBlendAlpha": "one",
+            "srcBlendRgb": "one"
+        }
+    ],
+    "stateBitsEntry": [
+        -1,
+        -1,
+        0,
+        0,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        1,
+        -1,
+        -1,
+        -1
+    ],
+    "stateFlags": 21,
+    "surfaceFlags": 262144,
+    "surfaceTypeBits": 0,
+    "techniqueSet": "mc_unlitdecalblend_add_fzw1z66f",
+    "textureAtlas": {
+        "columns": 1,
+        "rows": 1
+    },
+    "textures": [
+        {
+            "image": "vacuum_tube_c",
+            "isMatureContent": false,
+            "name": "colorMap",
+            "samplerState": {
+                "clampU": false,
+                "clampV": false,
+                "clampW": false,
+                "filter": "linear",
+                "mipMap": "nearest"
+            },
+            "semantic": "colorMap"
+        }
+    ]
+}
