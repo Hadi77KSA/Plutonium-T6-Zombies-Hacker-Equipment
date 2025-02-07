@@ -1,0 +1,23 @@
+VERSION             "1"
+CONFIG              "C:/projects/cod/t6/bin/StringEd.cfg"
+FILENOTES           ""
+
+REFERENCE           ZOMBIE_EQUIP_HACKER
+LANG_ENGLISH        "Hacker"
+
+REFERENCE           ZOMBIE_EQUIP_HACKER_HOWTO
+LANG_ENGLISH        "Press ^3[{+actionslot 1}]^7 to use Hacker"
+
+REFERENCE           ZOMBIE_EQUIP_HACKER_PICKUP_HINT_STRING
+LANG_ENGLISH        "Hold ^3[{+activate}]^7 to trade equipment for Hacker"
+
+REFERENCE           ZOMBIE_HACK
+LANG_ENGLISH        "Hold ^3[{+activate}]^7 to Hack [Cost: &&1]"
+
+REFERENCE           ZOMBIE_HACK_NO_COST
+LANG_ENGLISH        "Hold ^3[{+activate}]^7 to Hack"
+
+REFERENCE           ZOMBIE_HACKING
+LANG_ENGLISH        "Hacking"
+
+ENDMARKER
