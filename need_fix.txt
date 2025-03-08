@@ -32,6 +32,8 @@ FUNCTIONALITY
 		-> 20250116 made struct.entity only get set on Nuketown Zombies and Die Rise, and increased trigger radius on Nuketown Zombies.
 
 	add pick up spots
+		-> 20250308 added fallback function to place the Hacker in a random initial spawn location per match in case there are no Hacker spawn points. Considered done.
+
 	investigate Max Ammo to Fire Sale behaviour on TranZit and Die Rise
 		-> 20250111 runtime error and no effect once picked up. Used replaceFunc to add Max Ammo to non-hackable powerups if Fire Sale is not added.
 

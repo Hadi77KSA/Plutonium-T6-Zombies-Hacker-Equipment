@@ -14,6 +14,11 @@ main()
 
 init()
 {
+	hacker_fallback_spawn_point = getEnt( "wpn_hacker", "target" );
+
+	if ( isdefined( hacker_fallback_spawn_point ) )
+		hacker_fallback_spawn_point move_hacker_fallback_location_to_initial_spawn_point();
+
 	thread init_hackables();
 }
 
@@ -126,6 +131,19 @@ hacker_location_random_init()
 		arrayremovevalue( hacker_tool_array, hacker_pos );
 		array_thread( hacker_tool_array, ::hacker_position_cleanup );
 	}
+	else if ( hacker_tool_array.size == 0 )
+	{
+		hacker_fallback_spawn_point = spawn( "trigger_radius_use", ( 0, 0, 0 ), 0, 64, 64 );
+		hacker_fallback_spawn_point.targetname = "zombie_equipment_upgrade";
+		hacker_fallback_spawn_point.zombie_equipment_upgrade = "equip_hacker_zm";
+		hacker_fallback_spawn_point.target = "wpn_hacker";
+		hacker_fallback_spawn_point triggerIgnoreTeam();
+		hacker_model = spawn( "script_model", hacker_fallback_spawn_point.origin );
+		hacker_model.angles = ( 0, 0, -90 );
+		precacheModel( "p_zom_moon_hacker_box_closed" );
+		hacker_model setmodel( "p_zom_moon_hacker_box_closed" );
+		hacker_model.targetname = hacker_fallback_spawn_point.target;
+	}
 }
 
 hacker_position_cleanup()
@@ -137,6 +155,41 @@ hacker_position_cleanup()
 
 	if ( isdefined( self ) )
 		self delete();
+}
+
+move_hacker_fallback_location_to_initial_spawn_point()
+{
+	location = level.scr_zm_map_start_location;
+
+	if ( ( location == "default" || location == "" ) && isdefined( level.default_start_location ) )
+		location = level.default_start_location;
+
+	match_string = level.scr_zm_ui_gametype + "_" + location;
+	spawnpoints = [];
+	structs = getstructarray( "initial_spawn", "script_noteworthy" );
+
+	if ( isdefined( structs ) )
+	{
+		foreach ( struct in structs )
+		{
+			if ( isdefined( struct.script_string ) && isSubStr( struct.script_string, match_string ) )
+				spawnpoints[spawnpoints.size] = struct;
+		}
+	}
+
+	if ( spawnpoints.size == 0 )
+		spawnpoints = getstructarray( "initial_spawn_points", "targetname" );
+
+	initial_spawn_point = random( spawnpoints );
+	v_spawn_point = groundtrace( initial_spawn_point.origin + vectorscale( ( 0, 0, 1 ), 10.0 ), initial_spawn_point.origin + vectorscale( ( 0, 0, -1 ), 300.0 ), 0, undefined )["position"];
+	self.origin = v_spawn_point + ( 0, 0, 30 );
+	hacker_model = getent( self.target, "targetname" );
+	hacker_model.origin = v_spawn_point + ( 0, 0, 1 );
+	struct = spawnstruct();
+	struct.trigger_org = self.origin;
+	struct.model_org = hacker_model.origin;
+	struct.model_ang = hacker_model.angles;
+	level.hacker_tool_positions[level.hacker_tool_positions.size] = struct;
 }
 
 init_hackables()
