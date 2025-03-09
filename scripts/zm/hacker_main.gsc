@@ -6,6 +6,10 @@ main()
 {
 	replaceFunc( maps\mp\zombies\_zm_equip_hacker::hacker_do_hack, ::hacker_do_hack );
 	hacker_location_random_init();
+
+	if ( level.hacker_tool_positions.size == 0 )
+		hacker_fallback_location_init();
+
 	limit_equipment( "equip_hacker_zm", 1 );
 	include_equipment( "equip_hacker_zm" );
 	maps\mp\zombies\_zm_equip_hacker::init();
@@ -14,10 +18,10 @@ main()
 
 init()
 {
-	hacker_fallback_spawn_point = getEnt( "wpn_hacker", "target" );
+	hacker_fallback_location = getEnt( "wpn_hacker", "target" );
 
-	if ( isdefined( hacker_fallback_spawn_point ) )
-		hacker_fallback_spawn_point move_hacker_fallback_location_to_initial_spawn_point();
+	if ( isdefined( hacker_fallback_location ) )
+		hacker_fallback_location move_hacker_fallback_location_to_initial_spawn_point();
 
 	thread init_hackables();
 }
@@ -131,19 +135,20 @@ hacker_location_random_init()
 		arrayremovevalue( hacker_tool_array, hacker_pos );
 		array_thread( hacker_tool_array, ::hacker_position_cleanup );
 	}
-	else if ( hacker_tool_array.size == 0 )
-	{
-		hacker_fallback_spawn_point = spawn( "trigger_radius_use", ( 0, 0, 0 ), 0, 64, 64 );
-		hacker_fallback_spawn_point.targetname = "zombie_equipment_upgrade";
-		hacker_fallback_spawn_point.zombie_equipment_upgrade = "equip_hacker_zm";
-		hacker_fallback_spawn_point.target = "wpn_hacker";
-		hacker_fallback_spawn_point triggerIgnoreTeam();
-		hacker_model = spawn( "script_model", hacker_fallback_spawn_point.origin );
-		hacker_model.angles = ( 0, 0, -90 );
-		precacheModel( "p_zom_moon_hacker_box_closed" );
-		hacker_model setmodel( "p_zom_moon_hacker_box_closed" );
-		hacker_model.targetname = hacker_fallback_spawn_point.target;
-	}
+}
+
+hacker_fallback_location_init()
+{
+	hacker_fallback_location = spawn( "trigger_radius_use", ( 0, 0, 0 ), 0, 64, 64 );
+	hacker_fallback_location.targetname = "zombie_equipment_upgrade";
+	hacker_fallback_location.zombie_equipment_upgrade = "equip_hacker_zm";
+	hacker_fallback_location.target = "wpn_hacker";
+	hacker_fallback_location triggerIgnoreTeam();
+	hacker_model = spawn( "script_model", hacker_fallback_location.origin );
+	hacker_model.angles = ( 0, 0, -90 );
+	precacheModel( "p_zom_moon_hacker_box_closed" );
+	hacker_model setmodel( "p_zom_moon_hacker_box_closed" );
+	hacker_model.targetname = hacker_fallback_location.target;
 }
 
 hacker_position_cleanup()
