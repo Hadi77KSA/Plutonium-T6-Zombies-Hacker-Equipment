@@ -1,4 +1,5 @@
 >game,T6
+>name,mod
 
 //localize,en_mod  // not needed as the strings are included with **_patch_zm.ff
 script,scripts/zm/hacker_boards.gsc

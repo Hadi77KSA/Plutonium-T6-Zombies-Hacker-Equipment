@@ -8,17 +8,17 @@ set MOD_BASE=%cd%
 -v ^
 --load "%GAME_FOLDER%\zone\all\common_mp.ff" ^
 --base-folder "%OAT_BASE%" ^
---asset-search-path "%MOD_BASE%" ^
---source-search-path "%MOD_BASE%\zone_source" ^
---output-folder "%MOD_BASE%\zone" mod
+--add-asset-search-path "%MOD_BASE%" ^
+--add-source-search-path "%MOD_BASE%\zone_source" ^
+%MOD_NAME%
 
 set err=%ERRORLEVEL%
 
 if %err% EQU 0 (
-XCOPY "%MOD_BASE%\zone\mod.ff" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.ff" /Y
-XCOPY "%MOD_BASE%\zone\mod.all.sabl" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.all.sabl" /Y
-XCOPY "%MOD_BASE%\zone\mod.english.sabs" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.english.sabs" /Y
-XCOPY "%MOD_BASE%\zone\mod.iwd" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.iwd" /Y
+XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\mod.ff" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.ff" /Y
+XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\mod.all.sabl" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.all.sabl" /Y
+XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\mod.english.sabs" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.english.sabs" /Y
+XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\mod.iwd" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.iwd" /Y
 ) else (
 COLOR C
 echo FAIL!
