@@ -206,7 +206,7 @@ init_hackables()
 
 	thread scripts\zm\hacker_perks::hack_perks();
 	// thread maps\mp\zombies\_zm_hackables_packapunch::hack_packapunch();
-	thread maps\mp\zombies\_zm_hackables_boards::hack_boards();
+	thread scripts\zm\hacker_boards::hack_boards();
 	thread scripts\zm\hacker_doors::hack_debris();
 	thread scripts\zm\hacker_doors::hack_doors();
 	thread maps\mp\zombies\_zm_hackables_powerups::hack_powerups();

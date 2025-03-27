@@ -8,7 +8,6 @@ FUNCTIONALITY
 		- some doors on some maps might not be hackable
 	mystery box
 	barricade repair
-		- verticality such as on Buried might need fixing
 	randomise pickup spots, and fallback pickup spot in initial player spawns if no pickup spot is provided
 
 DESIGN
