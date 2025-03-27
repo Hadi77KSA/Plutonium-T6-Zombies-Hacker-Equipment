@@ -2,5 +2,21 @@ FUNCTIONALITY
 	player to player point sharing
 	carry round bonus
 	powerup change
+	wallbuys, Buried chalks
+		- model flipping removed for Origins
+	doors, debris
+		- some doors on some maps might not be hackable
+	mystery box
+	barricade repair
+		- verticality such as on Buried might need fixing
+	randomise pickup spots, and fallback pickup spot in initial player spawns if no pickup spot is provided
 
 DESIGN
+	sounds
+		- hacking sound might be need to be increased
+	model
+		- currently using a rigid model in the viewmodel rather than the usual model due to OAT limitation
+	animations
+		- currently using Black Hat animations from multiplayer
+	HUD icon
+		- transparent when hacker has no ammo
