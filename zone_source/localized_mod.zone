@@ -1,0 +1,4 @@
+>game,T6
+
+//localize,en_mod  // not needed as the strings are included with **_patch_zm.ff
+soundbank,mod.english

@@ -1,7 +1,6 @@
 >game,T6
 >name,mod
 
-//localize,en_mod  // not needed as the strings are included with **_patch_zm.ff
 script,scripts/zm/hacker_boards.gsc
 script,scripts/zm/hacker_box.gsc
 script,scripts/zm/hacker_doors.gsc
@@ -17,4 +16,4 @@ techniqueset,,trivial_9z33feqw
 xmodel,p_zom_moon_hacker_box_closed
 weapon,equip_hacker_zm
 soundbank,mod.all
-soundbank,mod.english
+include,localized_mod
