@@ -12,7 +12,7 @@ FUNCTIONALITY
 
 DESIGN
 	sounds
-		- hacking sound might be need to be increased
+		- hacking sound might need to be increased
 	model
 		- currently using a rigid model in the viewmodel rather than the usual model due to OAT limitation
 	animations
