@@ -6,11 +6,12 @@ set MOD_BASE=%cd%
 
 "%OAT_BASE%\Linker.exe" ^
 -v ^
+--load "%GAME_FOLDER%\zone\all\zm_tomb.ff" ^
 --load "%GAME_FOLDER%\zone\all\common_mp.ff" ^
 --base-folder "%OAT_BASE%" ^
 --add-asset-search-path "%MOD_BASE%" ^
 --add-source-search-path "%MOD_BASE%\zone_source" ^
-%MOD_NAME%
+"%MOD_NAME%/mod"
 
 set err=%ERRORLEVEL%
 

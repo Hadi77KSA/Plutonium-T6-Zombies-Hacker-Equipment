@@ -11,7 +11,7 @@
     "lods": [
         {
             "distance": 1542.4498291015625,
-            "file": "model_export/p_zom_moon_hacker_box_open_lod0.GLB"
+            "file": "model_export/p_zom_moon_hacker_box_open_lod0.gltf"
         }
     ]
 }
