@@ -10,7 +10,97 @@ main()
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys, ::hack_wallbuys );
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack, ::wallbuy_hack );
 */
+	replaceFunc( maps\mp\zombies\_zm_weapons::wall_weapon_update_prompt, ::wall_weapon_update_prompt );
 	replaceFunc( maps\mp\zombies\_zm_weapons::weapon_spawn_think, ::weapon_spawn_think );
+}
+
+wall_weapon_update_prompt( player )
+{
+	weapon = self.stub.zombie_weapon_upgrade;
+
+	if ( !( isdefined( level.monolingustic_prompt_format ) && level.monolingustic_prompt_format ) )
+	{
+		player_has_weapon = player has_weapon_or_upgrade( weapon );
+
+		if ( !player_has_weapon && ( isdefined( level.weapons_using_ammo_sharing ) && level.weapons_using_ammo_sharing ) )
+		{
+			shared_ammo_weapon = player get_shared_ammo_weapon( self.zombie_weapon_upgrade );
+
+			if ( isdefined( shared_ammo_weapon ) )
+			{
+				weapon = shared_ammo_weapon;
+				player_has_weapon = 1;
+			}
+		}
+
+		if ( !player_has_weapon )
+		{
+			cost = get_weapon_cost( weapon );
+			self.stub.hint_string = get_weapon_hint( weapon );
+			self sethintstring( self.stub.hint_string, cost );
+		}
+		else if ( isdefined( level.use_legacy_weapon_prompt_format ) && level.use_legacy_weapon_prompt_format )
+		{
+			cost = get_weapon_cost( weapon );
+			ammo_cost = get_ammo_cost( weapon );
+			self.stub.hint_string = get_weapon_hint_ammo();
+			self sethintstring( self.stub.hint_string, cost, ammo_cost );
+		}
+		else
+		{
+			if ( player has_upgrade( weapon ) != ( isdefined( self.stub.hacked ) && self.stub.hacked ) )
+				ammo_cost = get_upgraded_ammo_cost( weapon );
+			else
+				ammo_cost = get_ammo_cost( weapon );
+
+			self.stub.hint_string = &"ZOMBIE_WEAPONAMMOONLY";
+			self sethintstring( self.stub.hint_string, ammo_cost );
+		}
+	}
+	else if ( !player has_weapon_or_upgrade( weapon ) )
+	{
+		string_override = 0;
+
+		if ( isdefined( player.pers_upgrades_awarded["nube"] ) && player.pers_upgrades_awarded["nube"] )
+			string_override = maps\mp\zombies\_zm_pers_upgrades_functions::pers_nube_ammo_hint_string( player, weapon );
+
+		if ( !string_override )
+		{
+			cost = get_weapon_cost( weapon );
+			weapon_display = get_weapon_display_name( weapon );
+
+			if ( !isdefined( weapon_display ) || weapon_display == "" || weapon_display == "none" )
+				weapon_display = "missing weapon name " + weapon;
+
+			self.stub.hint_string = &"ZOMBIE_WEAPONCOSTONLY";
+			self sethintstring( self.stub.hint_string, weapon_display, cost );
+		}
+	}
+	else
+	{
+		if ( player has_upgrade( weapon ) )
+			ammo_cost = get_upgraded_ammo_cost( weapon );
+		else
+			ammo_cost = get_ammo_cost( weapon );
+
+		self.stub.hint_string = &"ZOMBIE_WEAPONAMMOONLY";
+		self sethintstring( self.stub.hint_string, ammo_cost );
+	}
+
+	if ( getdvarint( #"tu12_zombies_allow_hint_weapon_from_script" ) )
+	{
+		self.stub.cursor_hint = "HINT_WEAPON";
+		self.stub.cursor_hint_weapon = weapon;
+		self setcursorhint( self.stub.cursor_hint, self.stub.cursor_hint_weapon );
+	}
+	else
+	{
+		self.stub.cursor_hint = "HINT_NOICON";
+		self.stub.cursor_hint_weapon = undefined;
+		self setcursorhint( self.stub.cursor_hint );
+	}
+
+	return true;
 }
 
 weapon_spawn_think()
@@ -287,12 +377,14 @@ hack_bus_weapon()
 {
 	bus_buyable_weapon = getent( "bus_buyable_weapon1", "script_noteworthy" );
 
-	if ( weapontype( bus_buyable_weapon.zombie_weapon_upgrade ) == "grenade"
-		|| weapontype( bus_buyable_weapon.zombie_weapon_upgrade ) == "melee"
-		|| weapontype( bus_buyable_weapon.zombie_weapon_upgrade ) == "mine"
-		|| weapontype( bus_buyable_weapon.zombie_weapon_upgrade ) == "bomb"
-	)
-		return;
+	switch ( weapontype( bus_buyable_weapon.zombie_weapon_upgrade ) )
+	{
+		case "grenade":
+		case "melee":
+		case "mine":
+		case "bomb":
+			return;
+	}
 
 	struct = spawnstruct();
 	struct.origin = bus_buyable_weapon.origin;
@@ -349,12 +441,14 @@ register_hackable_wallbuy_when_added()
 	while ( !isdefined( self.trigger_stub ) )
 		wait 1;
 
-	if ( weapontype( self.trigger_stub.zombie_weapon_upgrade ) == "grenade"
-		|| weapontype( self.trigger_stub.zombie_weapon_upgrade ) == "melee"
-		|| weapontype( self.trigger_stub.zombie_weapon_upgrade ) == "mine"
-		|| weapontype( self.trigger_stub.zombie_weapon_upgrade ) == "bomb"
-	)
-		return;
+	switch ( weapontype( self.trigger_stub.zombie_weapon_upgrade ) )
+	{
+		case "grenade":
+		case "melee":
+		case "mine":
+		case "bomb":
+			return;
+	}
 
 	struct = spawnstruct();
 	struct.origin = self.origin;
