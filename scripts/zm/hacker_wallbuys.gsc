@@ -10,8 +10,21 @@ main()
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys, ::hack_wallbuys );
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack, ::wallbuy_hack );
 */
+
+	if ( ( isdefined( level._wallbuy_override_num_bits ) && level._wallbuy_override_num_bits < 2 ) || getDvar( "mapname" ) == "zm_tomb" )
+	{
+		replaceFunc( maps\mp\zombies\_zm_weapons::init_spawnable_weapon_upgrade, ::init_spawnable_weapon_upgrade );
+	}
+
 	replaceFunc( maps\mp\zombies\_zm_weapons::wall_weapon_update_prompt, ::wall_weapon_update_prompt );
 	replaceFunc( maps\mp\zombies\_zm_weapons::weapon_spawn_think, ::weapon_spawn_think );
+}
+
+init_spawnable_weapon_upgrade()
+{
+	removeDetour( maps\mp\zombies\_zm_weapons::init_spawnable_weapon_upgrade );
+	level._wallbuy_override_num_bits = undefined;
+	maps\mp\zombies\_zm_weapons::init_spawnable_weapon_upgrade();
 }
 
 wall_weapon_update_prompt( player )
@@ -363,13 +376,8 @@ hack_wallbuys()
 wallbuy_hack( hacker )
 {
 	self.wallbuy.trigger_stub.hacked = 1;
-
-	if ( !isdefined( level._wallbuy_override_num_bits ) || level._wallbuy_override_num_bits >= 2 )
-	{
-		self.clientfieldname = self.wallbuy.zombie_weapon_upgrade + "_" + self.origin;
-		level setclientfield( self.clientfieldname, 2 );
-	}
-
+	self.clientfieldname = self.wallbuy.zombie_weapon_upgrade + "_" + self.origin;
+	level setclientfield( self.clientfieldname, 2 );
 	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
 }
 

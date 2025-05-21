@@ -3,7 +3,6 @@ FUNCTIONALITY
 	carry round bonus
 	powerup change
 	wallbuys, Buried chalks
-		- model flipping removed for Origins
 	doors, debris
 		- some doors on some maps might not be hackable
 	mystery box
@@ -14,7 +13,6 @@ DESIGN
 	sounds
 		- hacking sound might need to be increased
 	model
-		- currently using a rigid model in the viewmodel rather than the usual model due to OAT limitation
 	animations
 		- currently using Black Hat animations from multiplayer
 	HUD icon

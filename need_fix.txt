@@ -5,6 +5,8 @@ FUNCTIONALITY
 			-> 20250109 done.
 			-> some spots specific to other modes (Grief, Survival) had hack prompt appear. Fixed that.
 			-> 20250113 made wallbuy model not flip on Origins due to the map defining level._wallbuy_override_num_bits. Might change.
+			-> 20250520 made ammo prompts show hacked ammo cost for most weapons, similar to BO3.
+			-> 20250521 wallbuy model now flips on Origins.
 		TranZit bus B23r
 			-> 20250118 made hackable, model flips when the bus stops moving or is about to depart.
 
@@ -43,6 +45,7 @@ DESIGN
 
 	model
 		-> 20250207 added from the model exports from BO1's zombie_moon.ff through OAT. Used a modified version of "p_zom_moon_hacker_box_open" for the weapon in player viewmodel since OAT only properly imports rigid models. Materials are all done through copy-pasting similar templates based on the techniquesets.
+		-> 20250517 changed the viewmodel to a custom version of the regular one.
 
 	animations
 		-> 20250308 added bobbing when sprinting. Considered done for now until OAT is able to import custom animations.
