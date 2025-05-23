@@ -1,3 +1,4 @@
+#include common_scripts\utility;
 #include maps\mp\_utility;
 #include maps\mp\zombies\_zm_hackables_box;
 #include maps\mp\zombies\_zm_utility;
@@ -5,6 +6,7 @@
 main()
 {
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_think, ::box_respin_think );
+	replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_box_thread, ::respin_box_thread );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_respin_think, ::box_respin_respin_think );
 	// replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_respin_box, ::respin_respin_box );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::init_summon_box, ::init_summon_box );
@@ -12,8 +14,8 @@ main()
 
 box_respin_think( chest, player )
 {
-	if ( getdvar( "mapname" ) == "zm_highrise" )
-		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
+	if ( getdvar( "mapname" ) == "zm_highrise" && issubstr( chest.script_noteworthy, "start_chest" ) )
+		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 52.5 );
 	else
 		org = self.origin;
 
@@ -35,10 +37,33 @@ box_respin_think( chest, player )
 	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( respin_hack );
 }
 
+respin_box_thread( hacker )
+{
+	if ( isdefined( self.chest.zbarrier.weapon_model ) )
+		self.chest.zbarrier.weapon_model notify( "kill_respin_think_thread" );
+
+	self.chest.no_fly_away = 1;
+	self.chest.zbarrier notify( "box_hacked_respin" );
+	thread maps\mp\zombies\_zm_unitrigger::unregister_unitrigger( self.chest.unitrigger_stub );
+	play_sound_at_pos( "open_chest", self.chest.zbarrier.origin );
+	play_sound_at_pos( "music_chest", self.chest.zbarrier.origin );
+	maps\mp\zombies\_zm_weapons::unacquire_weapon_toggle( self.chest.zbarrier.weapon_string );
+	self.chest.zbarrier thread maps\mp\zombies\_zm_magicbox::treasure_chest_weapon_spawn( self.chest, hacker, 1 );
+	self.chest.zbarrier waittill( "randomization_done" );
+	self.chest.no_fly_away = undefined;
+
+	if ( !flag( "moving_chest_now" ) )
+	{
+		self.chest.grab_weapon_name = self.chest.zbarrier.weapon_string;
+		thread maps\mp\zombies\_zm_unitrigger::register_static_unitrigger( self.chest.unitrigger_stub, maps\mp\zombies\_zm_magicbox::magicbox_unitrigger_think );
+		self.chest thread maps\mp\zombies\_zm_magicbox::treasure_chest_timeout();
+	}
+}
+
 box_respin_respin_think( chest, player )
 {
-	if ( getdvar( "mapname" ) == "zm_highrise" )
-		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
+	if ( getdvar( "mapname" ) == "zm_highrise" && issubstr( chest.script_noteworthy, "start_chest" ) )
+		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 52.5 );
 	else
 		org = self.origin;
 
@@ -97,8 +122,8 @@ init_summon_box( create )
 			self._summon_hack_struct = undefined;
 		}
 
-		if ( getdvar( "mapname" ) == "zm_highrise" )
-			org = groundpos( self.chest_box.origin ) + vectorscale( ( 0, 0, 1 ), 12.5 );
+		if ( getdvar( "mapname" ) == "zm_highrise" && issubstr( self.script_noteworthy, "start_chest" ) )
+			org = groundpos( self.chest_box.origin ) + vectorscale( ( 0, 0, 1 ), 52.5 );
 		else
 			org = self.chest_box.origin;
 

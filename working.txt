@@ -5,6 +5,8 @@ FUNCTIONALITY
 	wallbuys, Buried chalks
 	doors, debris
 	mystery box
+		- prompt for picking up the weapon appears while hacking if the player touches the Mystery Box's trigger, pulls out the Hacker, and starts hacking.
+			Can cause the spin to become unhackable if interact is spammed when this happens.
 	barricade repair
 	randomise pickup spots, and fallback pickup spot in initial player spawns if no pickup spot is provided
 
