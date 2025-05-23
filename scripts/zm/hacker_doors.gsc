@@ -17,18 +17,14 @@ hack_doors( targetname, door_activate_func )
 		door_activate_func = maps\mp\zombies\_zm_blockers::door_opened;
 
 	is_not_classic = !is_classic();
-	radius = 48;
-	no_sight_check = undefined;
 
-	switch ( getdvar( "mapname" ) )
+	if ( getdvar( "mapname" ) == "zm_tomb" )
 	{
-		case "zm_nuked":
-		case "zm_buried":
-			no_sight_check = 1;
-			break;
-		case "zm_tomb":
-			radius = 60;
-			break;
+		radius = 60;
+	}
+	else
+	{
+		radius = 48;
 	}
 
 	for ( i = 0; i < doors.size; i++ )
@@ -51,7 +47,7 @@ hack_doors( targetname, door_activate_func )
 		struct.no_bullet_trace = 1;
 		struct.door_activate_func = door_activate_func;
 		trace_passed = 0;
-		struct.no_sight_check = no_sight_check;
+		struct.no_sight_check = 1;
 		door thread hide_door_buy_when_hacker_active( struct );
 		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::door_hack );
 		door thread watch_door_for_open( struct );

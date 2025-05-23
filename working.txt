@@ -4,7 +4,6 @@ FUNCTIONALITY
 	powerup change
 	wallbuys, Buried chalks
 	doors, debris
-		- some doors on some maps might not be hackable
 	mystery box
 	barricade repair
 	randomise pickup spots, and fallback pickup spot in initial player spawns if no pickup spot is provided
