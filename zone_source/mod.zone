@@ -7,13 +7,13 @@ script,scripts/zm/hacker_main.gsc
 script,scripts/zm/hacker_perks.gsc
 script,scripts/zm/hacker_wallbuys.csc
 script,scripts/zm/hacker_wallbuys.gsc
-image,,$identitynormalmap //included in patch_zm.ff
->iwd,mod
 techniqueset,,mc_lit_sm_r0c0_77e21qq8 //included in patch_zm.ff
 techniqueset,,trivial_9z33feqw //included in common_zm.ff
 techniqueset,,mc_lit_sm_b0c0s0_805w75j2 //included in common_zm.ff
 techniqueset,mc_lit_sm_r0c0n0s0_zqq1fze7 //part of zm_tomb.ff
 techniqueset,mc_unlitdecalblend_add_fzw1z66f //part of zm_tomb.ff
+image,,$identitynormalmap //included in patch_zm.ff
+>iwd,mod
 xmodel,p_zom_moon_hacker_box_closed
 weapon,equip_hacker_zm
 soundbank,mod.all
