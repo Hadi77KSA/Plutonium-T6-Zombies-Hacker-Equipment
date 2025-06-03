@@ -11,12 +11,12 @@ init()
 	{
 		case "zm_nuked":
 		case "zm_highrise":
-			level._hack_perks_override = ::hack_perks_override;
+			level._hack_perks_override = ::_hack_perks_override;
 			break;
 	}
 }
 
-hack_perks_override()
+_hack_perks_override()
 {
 	self.entity = self.perk;
 	return self;
