@@ -51,6 +51,7 @@ DESIGN
 
 	animations
 		-> 20250308 added bobbing when sprinting. Considered done for now until OAT is able to import custom animations.
+		-> 20250627 added raw xanim assets dumped using Greyhound to the IWD file since Plutonium will support loading raw xanims.
 
 	hud icon
 		-> 20250207 added, but is transparent when it has no ammo. Material is done through copy-pasting a similar template based on BO2's equipment icons.
