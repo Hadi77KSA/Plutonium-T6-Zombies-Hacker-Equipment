@@ -1,15 +1,242 @@
 #include common_scripts\utility;
 #include maps\mp\_utility;
 #include maps\mp\zombies\_zm_hackables_box;
+#include maps\mp\zombies\_zm_unitrigger;
 #include maps\mp\zombies\_zm_utility;
 
 main()
 {
+	replaceFunc( maps\mp\zombies\_zm_unitrigger::main, ::main_func );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_think, ::box_respin_think );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_box_thread, ::respin_box_thread );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_respin_think, ::box_respin_respin_think );
 	// replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_respin_box, ::respin_respin_box );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::init_summon_box, ::init_summon_box );
+}
+
+main_func()
+{
+	level thread debug_unitriggers();
+
+	if ( level._unitriggers._deferredinitlist.size )
+	{
+		for ( i = 0; i < level._unitriggers._deferredinitlist.size; i++ )
+			register_static_unitrigger( level._unitriggers._deferredinitlist[i], level._unitriggers._deferredinitlist[i].trigger_func );
+
+		for ( i = 0; i < level._unitriggers._deferredinitlist.size; i++ )
+			level._unitriggers._deferredinitlist[i] = undefined;
+
+		level._unitriggers._deferredinitlist = undefined;
+	}
+
+	valid_range = level._unitriggers.largest_radius + 15.0;
+	valid_range_sq = valid_range * valid_range;
+
+	while ( !isdefined( level.active_zone_names ) )
+		wait 0.1;
+
+	while ( true )
+	{
+		waited = 0;
+		active_zone_names = level.active_zone_names;
+		candidate_list = [];
+
+		for ( j = 0; j < active_zone_names.size; j++ )
+		{
+			if ( isdefined( level.zones[active_zone_names[j]].unitrigger_stubs ) )
+				candidate_list = arraycombine( candidate_list, level.zones[active_zone_names[j]].unitrigger_stubs, 1, 0 );
+		}
+
+		candidate_list = arraycombine( candidate_list, level._unitriggers.dynamic_stubs, 1, 0 );
+		players = getplayers();
+
+		for ( i = 0; i < players.size; i++ )
+		{
+			player = players[i];
+
+			if ( !isdefined( player ) )
+				continue;
+
+			player_origin = player.origin + vectorscale( ( 0, 0, 1 ), 35.0 );
+			trigger = level._unitriggers.trigger_pool[player getentitynumber()];
+			old_trigger = undefined;
+			closest = [];
+
+			if ( isdefined( trigger ) )
+			{
+				dst = valid_range_sq;
+				origin = trigger unitrigger_origin();
+				dst = trigger.stub.test_radius_sq;
+				time_to_ressess = 0;
+				trigger_still_valid = 0;
+
+				if ( distance2dsquared( player_origin, origin ) < dst )
+				{
+					if ( isdefined( trigger.reassess_time ) )
+					{
+						trigger.reassess_time = trigger.reassess_time - 0.05;
+
+						if ( trigger.reassess_time > 0.0 )
+							continue;
+
+						time_to_ressess = 1;
+					}
+
+					trigger_still_valid = 1;
+				}
+
+				closest = get_closest_unitriggers( player_origin, candidate_list, valid_range );
+
+				if ( isdefined( trigger ) && time_to_ressess && ( closest.size < 2 || isdefined( trigger.thread_running ) && trigger.thread_running ) )
+				{
+					if ( assess_and_apply_visibility( trigger, trigger.stub, player, 1 ) )
+						continue;
+				}
+
+				if ( trigger_still_valid && closest.size < 2 )
+				{
+					if ( assess_and_apply_visibility( trigger, trigger.stub, player, 1 ) )
+						continue;
+				}
+
+				if ( trigger_still_valid )
+				{
+					old_trigger = trigger;
+					trigger = undefined;
+					level._unitriggers.trigger_pool[player getentitynumber()] = undefined;
+				}
+				else if ( isdefined( trigger ) )
+					cleanup_trigger( trigger, player );
+			}
+			else
+				closest = get_closest_unitriggers( player_origin, candidate_list, valid_range );
+
+			index = 0;
+			first_usable = undefined;
+			first_visible = undefined;
+			trigger_found = 0;
+
+			while ( index < closest.size )
+			{
+				if ( !is_player_valid( player ) && !( isdefined( closest[index].ignore_player_valid ) && closest[index].ignore_player_valid ) )
+				{
+					index++;
+					continue;
+				}
+
+				if ( !( isdefined( closest[index].registered ) && closest[index].registered ) )
+				{
+					index++;
+					continue;
+				}
+
+				trigger = check_and_build_trigger_from_unitrigger_stub( closest[index], player );
+
+				if ( isdefined( trigger ) )
+				{
+					trigger.parent_player = player;
+
+					if ( assess_and_apply_visibility( trigger, closest[index], player, 0 ) )
+					{
+						if ( player is_player_looking_at( closest[index].origin, 0.9, 0 ) )
+						{
+							if ( !is_same_trigger( old_trigger, trigger ) && isdefined( old_trigger ) )
+								cleanup_trigger( old_trigger, player );
+
+							level._unitriggers.trigger_pool[player getentitynumber()] = trigger;
+							trigger_found = 1;
+							break;
+						}
+
+						if ( !isdefined( first_usable ) )
+							first_usable = index;
+					}
+
+					if ( !isdefined( first_visible ) )
+						first_visible = index;
+
+					if ( isdefined( trigger ) )
+					{
+						if ( is_same_trigger( old_trigger, trigger ) )
+							level._unitriggers.trigger_pool[player getentitynumber()] = undefined;
+						else
+							cleanup_trigger( trigger, player );
+					}
+
+					last_trigger = trigger;
+				}
+
+				index++;
+				waited = 1;
+				wait 0.05;
+			}
+
+			if ( !isdefined( player ) )
+				continue;
+
+			if ( trigger_found )
+				continue;
+
+			if ( isdefined( first_usable ) )
+				index = first_usable;
+			else if ( isdefined( first_visible ) )
+				index = first_visible;
+
+			trigger = check_and_build_trigger_from_unitrigger_stub( closest[index], player );
+
+			if ( isdefined( trigger ) )
+			{
+				trigger.parent_player = player;
+				level._unitriggers.trigger_pool[player getentitynumber()] = trigger;
+
+				if ( is_same_trigger( old_trigger, trigger ) )
+					continue;
+
+				if ( isdefined( old_trigger ) )
+					cleanup_trigger( old_trigger, player );
+
+				if ( isdefined( trigger ) )
+					assess_and_apply_visibility( trigger, trigger.stub, player, 0 );
+			}
+		}
+
+		if ( !waited )
+			wait 0.05;
+	}
+}
+
+is_same_trigger( old_trigger, trigger )
+{
+	return isdefined( old_trigger ) && old_trigger == trigger && trigger.parent_player == old_trigger.parent_player;
+}
+
+check_and_build_trigger_from_unitrigger_stub( stub, player )
+{
+	if ( !isdefined( stub ) )
+		return undefined;
+
+	if ( isdefined( stub.trigger_per_player ) && stub.trigger_per_player )
+	{
+		if ( !isdefined( stub.playertrigger ) )
+			stub.playertrigger = [];
+
+		if ( !isdefined( stub.playertrigger[player getentitynumber()] ) )
+		{
+			trigger = build_trigger_from_unitrigger_stub( stub, player );
+			level._unitriggers.trigger_pool[player getentitynumber()] = trigger;
+		}
+		else
+			trigger = stub.playertrigger[player getentitynumber()];
+	}
+	else if ( !isdefined( stub.trigger ) )
+	{
+		trigger = build_trigger_from_unitrigger_stub( stub, player );
+		level._unitriggers.trigger_pool[player getentitynumber()] = trigger;
+	}
+	else
+		trigger = stub.trigger;
+
+	return trigger;
 }
 
 box_respin_think( chest, player )

@@ -27,6 +27,7 @@ FUNCTIONALITY
 		-> 20250113 Die Rise considered done. Need to investigate Buried.
 		-> 20250116 added struct.no_sight_check defining on Buried to fix prompt not appearing, and changed setting of trigger origin to use original method except on Die Rise to avoid bugs on other maps.
 		-> 20250523 fixed hint string not reflecting type of weapon properly when respun from/to a special grenade to/from a gun, fixed weapon pick up prompt always appearing when the box is hacked for respinning, changed Die Rise's modification to only apply to the upside-down location and raised the hack trigger for that location.
+		-> 20250702 used BO3's unitrigger implementation to fix a specific case of the trigger prompt appearing when hacking the box
 
 	barricade repair (boards get repaired while hacker is out)
 		-> 20250109 done.
