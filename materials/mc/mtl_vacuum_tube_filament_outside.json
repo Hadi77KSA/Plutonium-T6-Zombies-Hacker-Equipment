@@ -1,4 +1,6 @@
 {
+    "$schema": "http://openassettools.dev/schema/material.v1.json",
+    "_game": "t6",
     "_type": "material",
     "_version": 1,
     "cameraRegion": "emissiveTrans",
@@ -7,9 +9,7 @@
     "gameFlags": [
         "1000"
     ],
-    "hashIndex": 0,
     "layeredSurfaceTypes": 536870912,
-    "probeMipBits": 0,
     "sortKey": 31,
     "stateBits": [
         {

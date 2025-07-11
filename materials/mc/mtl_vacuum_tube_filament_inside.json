@@ -1,4 +1,6 @@
 {
+    "$schema": "http://openassettools.dev/schema/material.v1.json",
+    "_game": "t6",
     "_type": "material",
     "_version": 1,
     "cameraRegion": "litOpaque",
@@ -8,9 +10,7 @@
         "10",
         "CASTS_SHADOW"
     ],
-    "hashIndex": 0,
     "layeredSurfaceTypes": 536870912,
-    "probeMipBits": 0,
     "sortKey": 4,
     "stateBits": [
         {
