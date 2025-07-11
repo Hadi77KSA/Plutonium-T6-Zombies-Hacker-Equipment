@@ -1,4 +1,5 @@
 >game,T6
+>gdt,zm_wpn_hacker
 
 script,scripts/zm/hacker_boards.gsc
 script,scripts/zm/hacker_box.gsc
