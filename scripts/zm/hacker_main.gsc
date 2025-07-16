@@ -8,7 +8,7 @@ main()
 	hacker_location_random_init();
 
 	if ( level.hacker_tool_positions.size == 0 )
-		hacker_fallback_location_init();
+		hacker_pos();
 
 	limit_equipment( "equip_hacker_zm", 1 );
 	include_equipment( "equip_hacker_zm" );
@@ -18,10 +18,10 @@ main()
 
 init()
 {
-	hacker_fallback_location = getEnt( "wpn_hacker", "target" );
+	hacker = getEnt( "wpn_hacker", "target" );
 
-	if ( isdefined( hacker_fallback_location ) )
-		hacker_fallback_location move_hacker_fallback_location_to_initial_spawn_point();
+	if ( isdefined( hacker ) )
+		hacker initial_spawn();
 
 	thread init_hackables();
 }
@@ -81,7 +81,7 @@ hacker_do_hack( hackable )
 	}
 
 	sound_ent stoploopsound( 0.5 );
-	sound_ent thread wait_then_remove( 0.5 );
+	sound_ent thread deleteAfterTime( 0.5 );
 
 	if ( hacked )
 		self playsound( "vox_mcomp_hack_success" );
@@ -103,7 +103,7 @@ hacker_do_hack( hackable )
 	return hacked;
 }
 
-wait_then_remove( length )
+deleteAfterTime( length )
 {
 	wait( length );
 	self unlink();
@@ -137,18 +137,18 @@ hacker_location_random_init()
 	}
 }
 
-hacker_fallback_location_init()
+hacker_pos()
 {
-	hacker_fallback_location = spawn( "trigger_radius_use", ( 0, 0, 0 ), 0, 64, 64 );
-	hacker_fallback_location.targetname = "zombie_equipment_upgrade";
-	hacker_fallback_location.zombie_equipment_upgrade = "equip_hacker_zm";
-	hacker_fallback_location.target = "wpn_hacker";
-	hacker_fallback_location triggerIgnoreTeam();
-	hacker_model = spawn( "script_model", hacker_fallback_location.origin );
-	hacker_model.angles = ( 0, 0, -90 );
+	hacker = spawn( "trigger_radius_use", ( 0, 0, 0 ), 0, 64, 64 );
+	hacker.targetname = "zombie_equipment_upgrade";
+	hacker.zombie_equipment_upgrade = "equip_hacker_zm";
+	hacker.target = "wpn_hacker";
+	hacker triggerIgnoreTeam();
+	model = spawn( "script_model", hacker.origin );
+	model.angles = ( 0, 0, -90 );
 	precacheModel( "p_zom_moon_hacker_box_closed" );
-	hacker_model setmodel( "p_zom_moon_hacker_box_closed" );
-	hacker_model.targetname = hacker_fallback_location.target;
+	model setmodel( "p_zom_moon_hacker_box_closed" );
+	model.targetname = hacker.target;
 }
 
 hacker_position_cleanup()
@@ -162,7 +162,7 @@ hacker_position_cleanup()
 		self delete();
 }
 
-move_hacker_fallback_location_to_initial_spawn_point()
+initial_spawn()
 {
 	location = level.scr_zm_map_start_location;
 
@@ -185,15 +185,15 @@ move_hacker_fallback_location_to_initial_spawn_point()
 	if ( spawnpoints.size == 0 )
 		spawnpoints = getstructarray( "initial_spawn_points", "targetname" );
 
-	initial_spawn_point = random( spawnpoints );
-	v_spawn_point = groundtrace( initial_spawn_point.origin + vectorscale( ( 0, 0, 1 ), 10.0 ), initial_spawn_point.origin + vectorscale( ( 0, 0, -1 ), 300.0 ), 0, undefined )["position"];
+	initial_spawn = random( spawnpoints );
+	v_spawn_point = groundtrace( initial_spawn.origin + vectorscale( ( 0, 0, 1 ), 10.0 ), initial_spawn.origin + vectorscale( ( 0, 0, -1 ), 300.0 ), 0, undefined )["position"];
 	self.origin = v_spawn_point + ( 0, 0, 30 );
-	hacker_model = getent( self.target, "targetname" );
-	hacker_model.origin = v_spawn_point + ( 0, 0, 1 );
+	model = getent( self.target, "targetname" );
+	model.origin = v_spawn_point + ( 0, 0, 1 );
 	struct = spawnstruct();
 	struct.trigger_org = self.origin;
-	struct.model_org = hacker_model.origin;
-	struct.model_ang = hacker_model.angles;
+	struct.model_org = model.origin;
+	struct.model_ang = model.angles;
 	level.hacker_tool_positions[level.hacker_tool_positions.size] = struct;
 }
 
