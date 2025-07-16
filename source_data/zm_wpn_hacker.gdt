@@ -430,7 +430,7 @@
 		"firstRaiseAnim" "viewmodel_zom_hacker_pullout"
 		"firstRaiseSound" "fly_gear_pull_out"
 		"firstRaiseSoundPlayer" "fly_gear_pull_out"
-		"firstRaiseTime" "0.5"
+		"firstRaiseTime" "1.6"
 		"flameTableFirstPerson" ""
 		"flameTableThirdPerson" ""
 		"flipKillIcon" "1"
