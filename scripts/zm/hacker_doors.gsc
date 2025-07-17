@@ -16,7 +16,7 @@ hack_doors( targetname, door_activate_func )
 	if ( !isdefined( door_activate_func ) )
 		door_activate_func = maps\mp\zombies\_zm_blockers::door_opened;
 
-	is_not_classic = !is_classic();
+	var = !is_classic();
 
 	if ( getdvar( "mapname" ) == "zm_tomb" )
 	{
@@ -31,7 +31,7 @@ hack_doors( targetname, door_activate_func )
 	{
 		door = doors[i];
 
-		if ( is_not_classic
+		if ( var
 			&& ( isdefined( door.script_parameters ) && door.script_parameters == "grief_remove"
 			|| isdefined( door.script_noteworthy ) && ( door.script_noteworthy == "electric_door" || door.script_noteworthy == "electric_buyable_door" || door.script_noteworthy == "local_electric_door" ) )
 		)
@@ -70,8 +70,9 @@ hack_debris()
 			break;
 	}
 
-	foreach ( door in doors )
+	for ( i = 0; i < doors.size; i++ )
 	{
+		door = doors[i];
 		struct = spawnstruct();
 		struct.origin = door.origin + anglestoforward( door.angles ) * 2;
 		struct.radius = radius;
@@ -106,6 +107,6 @@ debris_waittill_purchased()
 		self waittill( "trigger", who, force );
 	while ( !is_player_valid( who )
 		|| getdvarint( #"zombie_unlock_all" ) <= 0
-		&& !( isdefined( force ) && force ) && ( !who usebuttonpressed() || who in_revive_trigger() || who.score < self.zombie_cost )
+		&& ( !( isdefined( force ) && force ) && ( !who usebuttonpressed() || who in_revive_trigger() ) || who.score < self.zombie_cost )
 	);
 }
