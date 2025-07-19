@@ -332,6 +332,7 @@ weapon_spawn_think()
 hack_wallbuys()
 {
 	weapon_spawns = getstructarray( "weapon_upgrade", "targetname" );
+	weapon_spawns = arrayCombine( weapon_spawns, getstructarray( "buildable_wallbuy", "targetname" ), 1, 0 );
 	location = getdvar( #"ui_zm_mapstartlocation" );
 
 	if ( ( location == "default" || location == "" ) && isdefined( level.default_start_location ) )
@@ -342,8 +343,27 @@ hack_wallbuys()
 	if ( "" != location )
 		match_string = match_string + "_" + location;
 
+	if ( getdvar( "mapname" ) == "zm_transit" && is_classic() )
+	{
+		thread bus_buyable_weapon1();
+	}
+
 	for ( i = 0; i < weapon_spawns.size; i++ )
 	{
+		if ( isdefined( weapon_spawns[i].script_noteworthy ) && !issubstr( weapon_spawns[i].script_noteworthy, match_string ) )
+			continue;
+
+		switch ( weapon_spawns[i].targetname )
+		{
+			case "buildable_wallbuy":
+				if ( isdefined( weapon_spawns[i].script_location ) )
+				{
+					weapon_spawns[i] thread buildable_wallbuy();
+				}
+
+				continue;
+		}
+
 		if ( weapontype( weapon_spawns[i].zombie_weapon_upgrade ) == "grenade" )
 			continue;
 
@@ -354,9 +374,6 @@ hack_wallbuys()
 			continue;
 
 		if ( weapontype( weapon_spawns[i].zombie_weapon_upgrade ) == "bomb" )
-			continue;
-
-		if ( isdefined( weapon_spawns[i].script_noteworthy ) && !issubstr( weapon_spawns[i].script_noteworthy, match_string ) )
 			continue;
 
 		struct = spawnstruct();
@@ -375,17 +392,40 @@ hack_wallbuys()
 
 wallbuy_hack( hacker )
 {
-	self.wallbuy.trigger_stub.hacked = 1;
-	self.clientfieldname = self.wallbuy.zombie_weapon_upgrade + "_" + self.origin;
-	level setclientfield( self.clientfieldname, 2 );
-	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
+	if ( isdefined( self.wallbuy.script_noteworthy ) && self.wallbuy.script_noteworthy == "bus_buyable_weapon1" )
+	{
+		self.wallbuy.hacked = true;
+		maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
+
+		if ( level.the_bus.ismoving )
+		{
+			do
+				wait 2;
+			while ( level.the_bus.ismoving );
+		}
+		else
+			level.the_bus waittill( "ready_to_depart" );
+
+		model = getent( self.wallbuy.target, "targetname" );
+		model unlink();
+		model rotateroll( 180, 0.5 );
+		wait 0.55;
+		model linkto( level.the_bus, "", level.the_bus worldtolocalcoords( model.origin ), model.angles + level.the_bus.angles );
+	}
+	else
+	{
+		self.wallbuy.trigger_stub.hacked = 1;
+		self.clientfieldname = self.wallbuy.zombie_weapon_upgrade + "_" + self.origin;
+		level setclientfield( self.clientfieldname, 2 );
+		maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
+	}
 }
 
-hack_bus_weapon()
+bus_buyable_weapon1()
 {
-	bus_buyable_weapon = getent( "bus_buyable_weapon1", "script_noteworthy" );
+	bus_buyable_weapon1 = getent( "bus_buyable_weapon1", "script_noteworthy" );
 
-	switch ( weapontype( bus_buyable_weapon.zombie_weapon_upgrade ) )
+	switch ( weapontype( bus_buyable_weapon1.zombie_weapon_upgrade ) )
 	{
 		case "grenade":
 		case "melee":
@@ -395,56 +435,19 @@ hack_bus_weapon()
 	}
 
 	struct = spawnstruct();
-	struct.origin = bus_buyable_weapon.origin;
+	struct.origin = bus_buyable_weapon1.origin;
 	struct.trigger_offset = vectorscale( ( 0, 0, 1 ), -36 );
 	struct.radius = 48;
 	struct.height = 48;
 	struct.script_float = 2;
 	struct.script_int = 3000;
-	struct.wallbuy = bus_buyable_weapon;
+	struct.wallbuy = bus_buyable_weapon1;
 	struct.entity = struct.wallbuy;
-	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::bus_wallbuy_hack );
-	bus_buyable_weapon thread maps\mp\zombies\_zm_equip_hacker::hide_hint_when_hackers_active();
+	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::wallbuy_hack );
+	bus_buyable_weapon1 thread maps\mp\zombies\_zm_equip_hacker::hide_hint_when_hackers_active();
 }
 
-bus_wallbuy_hack( hacker )
-{
-	self.wallbuy.hacked = true;
-	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( self );
-
-	if ( level.the_bus.ismoving )
-	{
-		do
-			wait 2;
-		while ( level.the_bus.ismoving );
-	}
-	else
-		level.the_bus waittill( "ready_to_depart" );
-
-	model = getent( self.wallbuy.target, "targetname" );
-	model unlink();
-	model rotateroll( 180, 0.5 );
-	wait 0.55;
-	model linkto( level.the_bus, "", level.the_bus worldtolocalcoords( model.origin ), model.angles + level.the_bus.angles );
-}
-
-hack_dynamic_wallbuys()
-{
-	weapon_spawns = getstructarray( "buildable_wallbuy", "targetname" );
-	match_string = level.scr_zm_ui_gametype + "_" + level.scr_zm_map_start_location;
-
-	for ( i = 0; i < weapon_spawns.size; i++ )
-	{
-		if ( !isdefined( weapon_spawns[i].script_location )
-			|| isdefined( weapon_spawns[i].script_noteworthy ) && !issubstr( weapon_spawns[i].script_noteworthy, match_string )
-		)
-			continue;
-
-		weapon_spawns[i] thread register_hackable_wallbuy_when_added();
-	}
-}
-
-register_hackable_wallbuy_when_added()
+buildable_wallbuy()
 {
 	while ( !isdefined( self.trigger_stub ) )
 		wait 1;

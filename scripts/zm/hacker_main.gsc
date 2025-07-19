@@ -200,14 +200,10 @@ initial_spawn()
 init_hackables()
 {
 	thread scripts\zm\hacker_wallbuys::hack_wallbuys();
-
-	if ( getdvar( "mapname" ) == "zm_transit" && is_classic() )
-		thread scripts\zm\hacker_wallbuys::hack_bus_weapon();
-
 	thread scripts\zm\hacker_perks::hack_perks();
 	// thread maps\mp\zombies\_zm_hackables_packapunch::hack_packapunch();
 	thread scripts\zm\hacker_boards::hack_boards();
-	thread scripts\zm\hacker_doors::hack_debris();
+	thread scripts\zm\hacker_doors::hack_doors( "zombie_debris" );
 	thread scripts\zm\hacker_doors::hack_doors();
 	thread maps\mp\zombies\_zm_hackables_powerups::hack_powerups();
 	flag_wait( "initial_blackscreen_passed" );
@@ -217,10 +213,6 @@ init_hackables()
 		replaceFunc( maps\mp\zombies\_zm_hackables_powerups::unhackable_powerup, ::unhackable_powerup );
 
 	thread maps\mp\zombies\_zm_hackables_box::box_hacks();
-	wait 1;
-
-	if ( getdvar( "mapname" ) == "zm_buried" )
-		thread scripts\zm\hacker_wallbuys::hack_dynamic_wallbuys();
 }
 
 unhackable_powerup( name )
