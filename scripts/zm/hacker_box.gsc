@@ -10,7 +10,7 @@ main()
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_think, ::box_respin_think );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_box_thread, ::respin_box_thread );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::box_respin_respin_think, ::box_respin_respin_think );
-	// replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_respin_box, ::respin_respin_box );
+	replaceFunc( maps\mp\zombies\_zm_hackables_box::respin_respin_box, ::respin_respin_box );
 	replaceFunc( maps\mp\zombies\_zm_hackables_box::init_summon_box, ::init_summon_box );
 }
 
@@ -307,7 +307,7 @@ box_respin_respin_think( chest, player )
 	if ( getdvar( "mapname" ) == "zm_buried" )
 		respin_hack.no_sight_check = 1;
 
-	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( respin_hack, ::respin_respin_box, ::hack_box_qualifier );
+	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( respin_hack, maps\mp\zombies\_zm_hackables_box::respin_respin_box, ::hack_box_qualifier );
 	self.weapon_model waittill_either( "death", "kill_respin_respin_think_thread" );
 	maps\mp\zombies\_zm_equip_hacker::deregister_hackable_struct( respin_hack );
 }

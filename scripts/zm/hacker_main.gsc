@@ -199,12 +199,12 @@ initial_spawn()
 
 init_hackables()
 {
-	thread scripts\zm\hacker_wallbuys::hack_wallbuys();
-	thread scripts\zm\hacker_perks::hack_perks();
+	thread maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys();
+	thread maps\mp\zombies\_zm_hackables_perks::hack_perks();
 	// thread maps\mp\zombies\_zm_hackables_packapunch::hack_packapunch();
-	thread scripts\zm\hacker_boards::hack_boards();
-	thread scripts\zm\hacker_doors::hack_doors( "zombie_debris" );
-	thread scripts\zm\hacker_doors::hack_doors();
+	thread maps\mp\zombies\_zm_hackables_boards::hack_boards();
+	thread maps\mp\zombies\_zm_hackables_doors::hack_doors( "zombie_debris" );
+	thread maps\mp\zombies\_zm_hackables_doors::hack_doors();
 	thread maps\mp\zombies\_zm_hackables_powerups::hack_powerups();
 	flag_wait( "initial_blackscreen_passed" );
 	wait 0.05;

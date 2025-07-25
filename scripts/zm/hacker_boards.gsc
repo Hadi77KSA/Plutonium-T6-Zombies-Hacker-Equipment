@@ -1,12 +1,12 @@
 #include common_scripts\utility;
 #include maps\mp\zombies\_zm_hackables_boards;
 #include maps\mp\zombies\_zm_utility;
-/*
+
 main()
 {
-	replaceFunc( maps\mp\zombies\_zm_hackables_boards::hack_doors, ::hack_doors );
+	replaceFunc( maps\mp\zombies\_zm_hackables_boards::hack_boards, ::hack_boards );
 }
-*/
+
 init()
 {
 	level._zm_blocker_trigger_think_return_override = ::_zm_blocker_trigger_think_return_override;

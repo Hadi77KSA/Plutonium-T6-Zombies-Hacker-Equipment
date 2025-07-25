@@ -1,13 +1,13 @@
 #include maps\mp\zombies\_zm_hackables_doors;
 #include maps\mp\zombies\_zm_utility;
-/*
+
 main()
 {
 	replaceFunc( maps\mp\zombies\_zm_hackables_doors::hack_doors, ::hack_doors );
 	replaceFunc( maps\mp\zombies\_zm_hackables_doors::watch_door_for_open, ::watch_door_for_open );
 	replaceFunc( maps\mp\zombies\_zm_hackables_doors::door_hack, ::door_hack );
 }
-*/
+
 hack_doors( targetname, door_activate_func )
 {
 	if ( !isdefined( targetname ) )
@@ -54,8 +54,8 @@ hack_doors( targetname, door_activate_func )
 		trace_passed = 0;
 		struct.no_sight_check = no_sight_check;
 		door thread hide_door_buy_when_hacker_active( struct );
-		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::door_hack );
-		door thread watch_door_for_open( struct );
+		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, maps\mp\zombies\_zm_hackables_doors::door_hack );
+		door thread maps\mp\zombies\_zm_hackables_doors::watch_door_for_open( struct );
 	}
 }
 

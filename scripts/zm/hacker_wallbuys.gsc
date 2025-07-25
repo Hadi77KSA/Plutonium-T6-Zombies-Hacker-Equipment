@@ -6,10 +6,8 @@
 
 main()
 {
-/*
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys, ::hack_wallbuys );
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack, ::wallbuy_hack );
-*/
 
 	if ( ( isdefined( level._wallbuy_override_num_bits ) && level._wallbuy_override_num_bits < 2 ) || getDvar( "mapname" ) == "zm_tomb" )
 	{
@@ -383,7 +381,7 @@ hack_wallbuys()
 		struct.script_float = 2;
 		struct.script_int = 3000;
 		struct.wallbuy = weapon_spawns[i];
-		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::wallbuy_hack );
+		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack );
 	}
 
 	bowie_triggers = getentarray( "bowie_upgrade", "targetname" );
@@ -443,7 +441,7 @@ bus_buyable_weapon1()
 	struct.script_int = 3000;
 	struct.wallbuy = bus_buyable_weapon1;
 	struct.entity = struct.wallbuy;
-	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::wallbuy_hack );
+	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack );
 	bus_buyable_weapon1 thread maps\mp\zombies\_zm_equip_hacker::hide_hint_when_hackers_active();
 }
 
@@ -468,5 +466,5 @@ buildable_wallbuy()
 	struct.script_float = 2;
 	struct.script_int = 3000;
 	struct.wallbuy = self;
-	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::wallbuy_hack );
+	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack );
 }
