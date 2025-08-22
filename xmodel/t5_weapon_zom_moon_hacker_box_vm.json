@@ -1,4 +1,6 @@
 {
+    "$schema": "http://openassettools.dev/schema/xmodel.v1.json",
+    "_game": "t6",
     "_type": "xmodel",
     "_version": 1,
     "flags": 524288,
@@ -13,5 +15,6 @@
             "distance": 1542.44970703125,
             "file": "model_export/t5_weapon_zom_moon_hacker_box_vm_lod0.gltf"
         }
-    ]
+    ],
+    "type": "rigid"
 }
