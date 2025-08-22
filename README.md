@@ -2,7 +2,7 @@
 This mod ports the Hacker equipment from BO1 Moon to BO2.
 
 ## Installation
-1. [Download the latest release](https://github.com/Hadi77KSA/Plutonium-T6-Zombies-Hacker-Equipment/releases/latest/download/t6-hacker-equipment-release.zip).
+1. [Download the latest release](https://github.com/Hadi77KSA/Plutonium-T6-Zombies-Hacker-Equipment/releases/latest/download/release.zip).
 2. Extract the `zm_wpn_hacker` folder.
 3. Go to `%localappdata%\Plutonium\storage\t6` by pressing Win+R then pasting the mentioned path then pressing OK, and open the `mods` folder. If the `mods` folder does not exist, create it.
 
@@ -12,9 +12,9 @@ This mod ports the Hacker equipment from BO1 Moon to BO2.
 5. Start the game and load the mod through the in-game `Mods` menu.
 
 ## Previews
-![image](https://github.com/user-attachments/assets/c288c3d3-f3d4-4cc2-bd7f-4307ee77da06)
-![image](https://github.com/user-attachments/assets/f3b9d95a-093d-4b31-9229-6f263ee3d8f2)
-![image](https://github.com/user-attachments/assets/722f41ba-ae6b-4126-ad0a-8211c2b6e2ab)
+![hacker on ground](https://github.com/user-attachments/assets/c288c3d3-f3d4-4cc2-bd7f-4307ee77da06)
+![hacked wallbuy](https://github.com/user-attachments/assets/f3b9d95a-093d-4b31-9229-6f263ee3d8f2)
+![hacked mystery box weapon](https://github.com/user-attachments/assets/722f41ba-ae6b-4126-ad0a-8211c2b6e2ab)
 
 ## Credits
 - EthanC: [Jekyll](https://github.com/EthanC/Jekyll)
