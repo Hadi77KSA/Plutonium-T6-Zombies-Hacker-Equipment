@@ -18,18 +18,16 @@ init()
 
 _hack_perks_override()
 {
+	self.radius = 64;
 	self.entity = self.perk;
+	machine = isdefined( self.perk.machine ) ? self.perk.machine : getentarray( self.perk.target, "targetname" )[0];
+	self.trigger_offset = anglestoright( machine.angles ) * 18 + vectorscale( ( 0, 0, 1 ), 18.0 );
 	return self;
 }
 
 hack_perks()
 {
 	vending_triggers = getentarray( "zombie_vending", "targetname" );
-
-	if ( getdvar( "mapname" ) == "zm_nuked" )
-		radius = 64;
-	else
-		radius = 48;
 
 	for ( i = 0; i < vending_triggers.size; i++ )
 	{
@@ -44,7 +42,7 @@ hack_perks()
 			machine = getentarray( vending_triggers[i].target, "targetname" );
 
 		struct.origin = machine[0].origin + anglestoright( machine[0].angles ) * 18 + vectorscale( ( 0, 0, 1 ), 48.0 );
-		struct.radius = radius;
+		struct.radius = 48;
 		struct.height = 64;
 		struct.script_float = 5;
 
