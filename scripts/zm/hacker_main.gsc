@@ -61,9 +61,14 @@ hacker_do_hack( hackable )
 	self.hackertexthud.alpha = 1;
 	self.hackertexthud.color = ( 1, 1, 1 );
 	self.hackertexthud settext( &"ZOMBIE_HACKING" );
-	sound_ent = spawn( "script_origin", self.origin );
-	sound_ent playloopsound( "zmb_progress_bar", 0.5 );
-	sound_ent linkto( self );
+
+	if ( !isdefined( self.hackerLoopSound ) )
+	{
+		self.hackerLoopSound = spawn( "script_origin", self.origin );
+	}
+
+	self.hackerLoopSound playloopsound( "zmb_progress_bar", 0.5 );
+	self.hackerLoopSound linkto( self );
 
 	while ( self is_hacking( hackable ) )
 	{
@@ -80,8 +85,8 @@ hacker_do_hack( hackable )
 		}
 	}
 
-	sound_ent stoploopsound( 0.5 );
-	sound_ent thread deleteAfterTime( 0.5 );
+	self.hackerLoopSound stoploopsound( 0.5 );
+	self.hackerLoopSound thread deleteAfterTime( 0.5 );
 
 	if ( hacked )
 		self playsound( "vox_mcomp_hack_success" );
