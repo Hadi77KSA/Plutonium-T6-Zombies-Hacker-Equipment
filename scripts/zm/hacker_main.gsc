@@ -62,7 +62,11 @@ hacker_do_hack( hackable )
 	self.hackertexthud.color = ( 1, 1, 1 );
 	self.hackertexthud settext( &"ZOMBIE_HACKING" );
 
-	if ( !isdefined( self.hackerLoopSound ) )
+	if ( isdefined( self.hackerLoopSound ) )
+	{
+		self.hackerLoopSound notify( "reset" );
+	}
+	else
 	{
 		self.hackerLoopSound = spawn( "script_origin", self.origin );
 	}
@@ -110,6 +114,7 @@ hacker_do_hack( hackable )
 
 deleteAfterTime( length )
 {
+	self endon( "reset" );
 	wait( length );
 	self unlink();
 	self delete();
