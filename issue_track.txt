@@ -28,6 +28,7 @@ FUNCTIONALITY
 		-> 20250116 added struct.no_sight_check defining on Buried to fix prompt not appearing, and changed setting of trigger origin to use original method except on Die Rise to avoid bugs on other maps.
 		-> 20250523 fixed hint string not reflecting type of weapon properly when respun from/to a special grenade to/from a gun, fixed weapon pick up prompt always appearing when the box is hacked for respinning, changed Die Rise's modification to only apply to the upside-down location and raised the hack trigger for that location.
 		-> 20250702 used BO3's unitrigger implementation to fix a specific case of the trigger prompt appearing when hacking the box
+		-> 20250912 undone the BO3 unitrigger implementation and instead defined self.reassess_time for the trigger
 
 	barricade repair (boards get repaired while hacker is out)
 		-> 20250109 done.
@@ -35,6 +36,7 @@ FUNCTIONALITY
 	perk refunds (partial, need to account for moving perks)
 		-> 20250109 done.
 		-> 20250116 made struct.entity only get set on Nuketown Zombies and Die Rise, and increased trigger radius on Nuketown Zombies.
+		-> 20250825 increased trigger radius on Die Rise too
 
 	add pick up spots
 		-> 20250308 added fallback function to place the Hacker in a random initial spawn location per match in case there are no Hacker spawn points. Considered done.
@@ -45,6 +47,8 @@ FUNCTIONALITY
 DESIGN
 	sounds
 		-> 20250121 added success, fail, and in-progress hack sounds. Audio files and soundbank aliases obtained through BO3 using Scobalula's Greyhound and HydraX.
+		-> 20250823 added perk refund sound
+		-> bus_fx added sounds are quiet compared to the other games
 
 	model
 		-> 20250207 added from the model exports from BO1's zombie_moon.ff through OAT. Used a modified version of "p_zom_moon_hacker_box_open" for the weapon in player viewmodel since OAT only properly imports rigid models. Materials are all done through copy-pasting similar templates based on the techniquesets.
