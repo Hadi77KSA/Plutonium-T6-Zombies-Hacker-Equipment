@@ -7,11 +7,11 @@ main()
 
 init()
 {
-	switch ( getdvar( "mapname" ) )
+	switch ( getdvar( #"mapname" ) )
 	{
 		case "zm_nuked":
 		case "zm_highrise":
-			level._hack_perks_override = ::_hack_perks_override;
+			level._hack_perks_override = ::_hack_perks_override; //moon_perks_override
 			break;
 	}
 }

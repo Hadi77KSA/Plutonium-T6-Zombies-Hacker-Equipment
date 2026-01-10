@@ -9,7 +9,7 @@ main()
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::hack_wallbuys, ::hack_wallbuys );
 	replaceFunc( maps\mp\zombies\_zm_hackables_wallbuys::wallbuy_hack, ::wallbuy_hack );
 
-	if ( ( isdefined( level._wallbuy_override_num_bits ) && level._wallbuy_override_num_bits < 2 ) || getDvar( "mapname" ) == "zm_tomb" )
+	if ( ( isdefined( level._wallbuy_override_num_bits ) && level._wallbuy_override_num_bits < 2 ) || getDvar( #"mapname" ) == "zm_tomb" )
 	{
 		replaceFunc( maps\mp\zombies\_zm_weapons::init_spawnable_weapon_upgrade, ::init_spawnable_weapon_upgrade );
 	}
@@ -341,7 +341,7 @@ hack_wallbuys()
 	if ( "" != location )
 		match_string = match_string + "_" + location;
 
-	if ( getdvar( "mapname" ) == "zm_transit" && is_classic() )
+	if ( getdvar( #"mapname" ) == "zm_transit" && is_classic() )
 	{
 		thread bus_buyable_weapon1();
 	}

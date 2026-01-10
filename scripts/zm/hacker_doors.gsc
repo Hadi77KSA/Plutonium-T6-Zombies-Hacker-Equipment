@@ -22,7 +22,7 @@ hack_doors( targetname, door_activate_func )
 	radius = 48;
 	no_sight_check = ( targetname == "zombie_debris" ) ? undefined : 1;
 
-	switch ( getdvar( "mapname" ) )
+	switch ( getdvar( #"mapname" ) )
 	{
 		case "zm_buried":
 			no_sight_check = 1;

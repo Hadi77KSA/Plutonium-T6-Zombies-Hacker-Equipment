@@ -9,8 +9,8 @@ main()
 
 init()
 {
-	level._zm_blocker_trigger_think_return_override = ::_zm_blocker_trigger_think_return_override;
-	level._zm_build_trigger_from_unitrigger_stub_override = ::_zm_build_trigger_from_unitrigger_stub_override;
+	level._zm_blocker_trigger_think_return_override = ::check_blocker_trigger_for_hacker_tool;
+	level._zm_build_trigger_from_unitrigger_stub_override = ::moon_unitrigger_stub_override;
 }
 
 hack_boards()
@@ -51,12 +51,29 @@ hack_boards()
 	}
 }
 
-_zm_blocker_trigger_think_return_override( player )
+check_blocker_trigger_for_hacker_tool( player )
 {
-	return player maps\mp\zombies\_zm_equipment::is_equipment_active( "equip_hacker_zm" );
+	if ( player maps\mp\zombies\_zm_equipment::is_equipment_active( "equip_hacker_zm" ) )
+	{
+		if ( isdefined( self.unitrigger_stub.trigger ) )
+			maps\mp\zombies\_zm_unitrigger::unregister_unitrigger( self.unitrigger_stub );
+
+		return true;
+	}
+	else
+		return false;
 }
 
-_zm_build_trigger_from_unitrigger_stub_override( player )
+moon_unitrigger_stub_override( player )
 {
-	return player maps\mp\zombies\_zm_equipment::is_equipment_active( "equip_hacker_zm" ) && isdefined( self.trigger_target ) && self.trigger_target.targetname == "exterior_goal";
+	if ( player maps\mp\zombies\_zm_equipment::is_equipment_active( "equip_hacker_zm" ) )
+	{
+		if ( isdefined( self.trigger_target ) )
+		{
+			if ( self.trigger_target.targetname == "exterior_goal" )
+				return true;
+		}
+	}
+
+	return false;
 }

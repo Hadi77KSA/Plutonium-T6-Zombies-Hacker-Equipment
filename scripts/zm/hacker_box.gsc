@@ -14,7 +14,7 @@ main()
 
 box_respin_think( chest, player )
 {
-	if ( getdvar( "mapname" ) == "zm_highrise" && issubstr( chest.script_noteworthy, "start_chest" ) )
+	if ( getdvar( #"mapname" ) == "zm_highrise" && issubstr( chest.script_noteworthy, "start_chest" ) )
 		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 52.5 );
 	else
 		org = self.origin;
@@ -29,7 +29,7 @@ box_respin_think( chest, player )
 	respin_hack.no_bullet_trace = 1;
 	respin_hack.chest = chest;
 
-	if ( getdvar( "mapname" ) == "zm_buried" )
+	if ( getdvar( #"mapname" ) == "zm_buried" )
 		respin_hack.no_sight_check = 1;
 
 	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( respin_hack, ::respin_box, ::hack_box_qualifier );
@@ -62,7 +62,7 @@ respin_box_thread( hacker )
 
 box_respin_respin_think( chest, player )
 {
-	if ( getdvar( "mapname" ) == "zm_highrise" && issubstr( chest.script_noteworthy, "start_chest" ) )
+	if ( getdvar( #"mapname" ) == "zm_highrise" && issubstr( chest.script_noteworthy, "start_chest" ) )
 		org = groundpos( self.origin ) + vectorscale( ( 0, 0, 1 ), 52.5 );
 	else
 		org = self.origin;
@@ -77,7 +77,7 @@ box_respin_respin_think( chest, player )
 	respin_hack.no_bullet_trace = 1;
 	respin_hack.chest = chest;
 
-	if ( getdvar( "mapname" ) == "zm_buried" )
+	if ( getdvar( #"mapname" ) == "zm_buried" )
 		respin_hack.no_sight_check = 1;
 
 	maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( respin_hack, maps\mp\zombies\_zm_hackables_box::respin_respin_box, ::hack_box_qualifier );
@@ -124,7 +124,7 @@ init_summon_box( create )
 			self._summon_hack_struct = undefined;
 		}
 
-		if ( getdvar( "mapname" ) == "zm_highrise" && issubstr( self.script_noteworthy, "start_chest" ) )
+		if ( getdvar( #"mapname" ) == "zm_highrise" && issubstr( self.script_noteworthy, "start_chest" ) )
 			org = groundpos( self.chest_box.origin ) + vectorscale( ( 0, 0, 1 ), 52.5 );
 		else
 			org = self.chest_box.origin;
@@ -139,7 +139,7 @@ init_summon_box( create )
 		struct.chest = self;
 		self._summon_hack_struct = struct;
 
-		if ( getdvar( "mapname" ) == "zm_buried" )
+		if ( getdvar( #"mapname" ) == "zm_buried" )
 			struct.no_sight_check = 1;
 
 		maps\mp\zombies\_zm_equip_hacker::register_pooled_hackable_struct( struct, ::summon_box, ::summon_box_qualifier );
