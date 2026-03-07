@@ -13,6 +13,5 @@ DESIGN
 		- hacking sound might need to be increased
 	model
 	animations
-		- not everything is 1:1 with the BO1 anims (timings, offsets). Need the BO1 weapon file for 1:1
 	HUD icon
 		- transparent when hacker has no ammo
