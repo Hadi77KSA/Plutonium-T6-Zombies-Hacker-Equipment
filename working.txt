@@ -14,4 +14,3 @@ DESIGN
 	model
 	animations
 	HUD icon
-		- transparent when hacker has no ammo

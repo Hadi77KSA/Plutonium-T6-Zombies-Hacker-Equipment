@@ -61,12 +61,15 @@ DESIGN
 
 	hud icon
 		-> 20250207 added, but is transparent when it has no ammo. Material is done through copy-pasting a similar template based on BO2's equipment icons.
+		-> 20260311 icon no longer transparent.
 
 	shooting it results in com_error, caused by weaponType
 		-> 20250109 set weaponType to "mine" with unlimitedammo enabled, considered done. Might need to change.
+		-> 20260311 changed back to binoculars since clip can no longer contain ammo.
 
 	shooting it makes the equipment go away upon switching from it
 		-> 20250109 considered done with the com_error solution. Might need to change.
+		-> 20260311 same note as in com_error.
 
 	fix positioning in player hands in world view [low priority]
 		-> 20250207 considered done with the addition of BO1 Moon's Hacker model.
