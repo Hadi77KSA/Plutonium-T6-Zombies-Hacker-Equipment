@@ -14,7 +14,7 @@ techniqueset,,mc_lit_sm_b0c0s0_805w75j2 //included in common_zm.ff
 techniqueset,mc_lit_sm_r0c0n0s0_zqq1fze7 //part of zm_tomb.ff
 techniqueset,mc_unlitdecalblend_add_fzw1z66f //part of zm_tomb.ff
 image,,$identitynormalmap //included in patch_zm.ff
->iwd,zm_wpn_hacker_images
+>iwd,zm_wpn_hacker
 xmodel,p_zom_moon_hacker_box_closed
 weapon,equip_hacker_zm
 soundbank,mod.all

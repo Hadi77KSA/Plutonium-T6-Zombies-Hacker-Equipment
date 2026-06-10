@@ -18,7 +18,7 @@ if %err% EQU 0 (
 XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\mod.ff" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.ff" /Y
 XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\mod.all.sabl" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.all.sabl" /Y
 XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\mod.english.sabs" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\mod.english.sabs" /Y
-XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\zm_wpn_hacker_images.iwd" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\zm_wpn_hacker_images.iwd" /Y
+XCOPY "%OAT_BASE%\zone_out\%MOD_NAME%\zm_wpn_hacker.iwd" "%LOCALAPPDATA%\Plutonium\storage\t6\mods\%MOD_NAME%\zm_wpn_hacker.iwd" /Y
 ) else (
 COLOR C
 echo FAIL!
