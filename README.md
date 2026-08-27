@@ -18,6 +18,7 @@ This mod ports the Hacker equipment from BO1 Moon to BO2.
 
 ## Credits
 - EthanC: [Jekyll](https://github.com/EthanC/Jekyll)
+- Nukem & SE2Dev: [LinkerMod](https://github.com/Nukem9/LinkerMod)
 - Laupetin: [OpenAssetTools](https://github.com/Laupetin/OpenAssetTools)
 - plutoniummod: [t6-scripts](https://github.com/plutoniummod/t6-scripts)
 - Scobalula: [Greyhound](https://github.com/Scobalula/Greyhound), [HydraX](https://github.com/Scobalula/HydraX)
